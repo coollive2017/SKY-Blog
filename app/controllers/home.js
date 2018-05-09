@@ -12,7 +12,8 @@ router.get('/', (req, res, next) => {
     if (err) return next(err);
     res.render('index', {
       title: 'Generator-Express MVC',
-      articles: articles
+      articles: articles,
+      pretty:true
     });
   });
 });

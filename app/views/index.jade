@@ -3,4 +3,17 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
-  script $(document).ready(function(){console.log('ready!');})
+  div#alert.alert.alert-danger this is an error message
+
+  -var name = 'guiling'
+      if name === 'guiling'
+        p name is guiling
+      else
+        p name is guiinss
+
+  -var list = ['libai', 'dupu']
+    ul
+      each value in list
+        li=value
+block scriptsAfter
+    script $(document).ready(function(){console.log('ready!');})
