@@ -1,8 +1,63 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+/**/
+.nopadding{
+  padding: 0;
+}
+.nomarin{
+  margin: 0;
+}
+body{
+  background-color:rgb(244, 244, 244);
+}
+.navbar{
+  margin-bottom: 0;
+}
+.footer{
+  padding-top:0;
+  background-color: #F5F6EB;
+}
+.footerhr{
+  margin-top: 0;
+}
+.myglyphicon{
+  color:rgba(29,176,184,0.5);
+}
+.bodycontent{
+  background-color: #f3f3f3;
+  background-image: url("/img/wangge.png");
+  background-position: center 0;
+  /*background-size: cover;
+  -webkit-background-size: cover;
+  -o-background-size: cover;*/
 }
 
-a {
-  color: #00B7FF;
+.jumbotron{
+  background-image: url("/img/swiper/1.png");
+  background-repeat: no-repeat;
+  background-position: center 0;
+  background-size: cover;
+  -webkit-background-size: cover;
+  -o-background-size: cover;
+}
+.jumbox{
+  position:relative;
+  overflow: hidden;
+}
+.labelnav{
+  background-color: #F5F6EB;
+}
+.jumbox:after{
+  position:absolute;
+  left: 0;
+  top:0;
+  display: block;
+  width:100%;
+  height: 100%;
+  background-color: rgba(29,176,184,0.3);
+  content: attr(data-text);
+  transition:all 1s ease;
+  transform: translateY(-100%);
+  color: #FFF;
+}
+.jumbox:hover:after{
+  transform: translateY(0);
 }

@@ -1,0 +1,35 @@
+extends ./layout
+
+append css
+
+
+block contentAll
+  .jumbox(style='margin:0 0 30px;')
+    .jumbotron(style='margin:0;')
+      .container
+        h1 Hello, world!
+        h3 基于mongodb大型技术博客分享论坛的设计
+
+block contentLeft
+
+block contentRight
+  .row
+    .panel.panel-default
+      //.panel-heading
+      //
+      //
+      .panel-body
+        h3.panel-title
+          span.glyphicon.glyphicon-triangle-right.myglyphicon(aria-hidden="true", )
+          | 文章分类
+      .list-group
+        a.list-group-item(href="#") Cras justo odio
+        a.list-group-item(href="#") Dapibus ac facilisis in
+        a.list-group-item(href="#") Morbi leo risus
+        a.list-group-item(href="#") Porta ac consectetur ac
+        a.list-group-item(href="#") Vestibulum at eros
+
+
+
+
+
