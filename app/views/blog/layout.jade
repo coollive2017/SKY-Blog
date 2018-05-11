@@ -1,7 +1,7 @@
 extends ../layout
 
 append css
-
+  //link(rel='stylesheet', href='/css/jquery.shadow.css')
 block main
 
   block header
@@ -20,13 +20,11 @@ block main
             li.active
               a(href='#') 博客首页
             li
-              form.navbar-form.navbar-left(role="search")
+              form.navbar-form.navbar-left(role="search", style='')
                 .input-group
                   input.form-control(type="text", placeholder="搜博主文章名...")
                   span.input-group-btn
                     button.btn.btn-default(type="submit") Search
-
-
           ul.nav.navbar-nav.navbar-right
             //登录注册
             li
@@ -51,13 +49,12 @@ block main
                   a(href='#') 注销
         // /.nav-collapse
   block contentAll
-  .container
-    .col-lg-9.contentLeft
-      block contentLeft
-    .col-lg-3.contentRight
-      block contentRight
-
-
+  .container(style='padding:0;')
+    .row
+      .col-sm-9.contentLeft(style='margin:0;padding:0;')
+        block contentLeft
+      .col-sm-3.contentRight
+        block contentRight
 
 
   block footer
@@ -65,3 +62,9 @@ block main
       hr.footerhr
       .container
         p.text-muted Place sticky footer content here.
+
+block scriptsAfter
+  //script(src='/js/jquery.shadow.js')
+
+
+

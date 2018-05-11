@@ -2,32 +2,94 @@ extends ./layout
 
 append css
 
-
 block contentAll
-  .jumbox(style='margin:0 0 30px;')
+  .jumbox
     .jumbotron(style='margin:0;')
       .container
         h1 Hello, world!
         h3 基于mongodb大型技术博客分享论坛的设计
+  .container
+    ol.breadcrumb(style='background-color:#FFFFFF;margin:0;')
+      span.glyphicon.glyphicon-home.myglyphicon
+      |&nbsp;您当前的位置:&nbsp;
+      li
+        a(href="#") 首页
+      li
+        a(href="#") Library
+      li.active Data
+
 
 block contentLeft
+  .articleContent
+    .contentList
+      .ul.list-unstyled
+        li
+          a
+            h3 程序猿的正确提问方式
+          p.plimit container 的所有元素 内边距 都有 15px 的距离，显得非常美观，.col-xx-xx 也设置了内边距 15px。这样就无法和 .contariner 的元素对齐了（.col-xx-xx相对于 .container的距离为30px），所以第一个栅格元素元素和最后一个栅格元素 需要分别设置为 {padding-left:0px;} 、{padding-right:0px;}。这样解决了对齐的问题，但是设置之后，虽然每个栅格的宽度一致，显示的内容的宽度又有了 15px 的差距。于是 FB 的天才们巧妙的 采用了 负数的外边框的 解决方案，不仅代码实现简单，还没有 每个 栅格 显示的内容的宽度不一致的问题。
+          .articleinfo
+            span
+              | 用户头像、信息
+              img(src='')
+            | 发表时间
+            | 评论
+            | 浏览数
+        li
+          a
+            h3 程序猿的正确提问方式
+          p.plimit container 的所有元素 内边距 都有 15px 的距离，显得非常美观，.col-xx-xx 也设置了内边距 15px。这样就无法和 .contariner 的元素对齐了（.col-xx-xx相对于 .container的距离为30px），所以第一个栅格元素元素和最后一个栅格元素 需要分别设置为 {padding-left:0px;} 、{padding-right:0px;}。这样解决了对齐的问题，但是设置之后，虽然每个栅格的宽度一致，显示的内容的宽度又有了 15px 的差距。于是 FB 的天才们巧妙的 采用了 负数的外边框的 解决方案，不仅代码实现简单，还没有 每个 栅格 显示的内容的宽度不一致的问题。
+          .articleinfo
+            span
+              | 用户头像、信息
+              img(src='')
+            | 发表时间
+            | 评论
+            | 浏览数
+      .box(style='height:1000px;')
+
+
 
 block contentRight
   .row
-    .panel.panel-default
-      //.panel-heading
-      //
-      //
-      .panel-body
-        h3.panel-title
+    .panel.panel-default(style='border:0; box-shadow:3px 3px 15px -10px rgba(0, 0, 0, 0.9);')
+      .panel-body(style='padding-top:0;')
+        h3.panel-title(style='border-bottom:1px solid rgba(0, 0, 0, 0.05);padding:8px 0;margin:0 0 5px;')
           span.glyphicon.glyphicon-triangle-right.myglyphicon(aria-hidden="true", )
           | 文章分类
-      .list-group
-        a.list-group-item(href="#") Cras justo odio
-        a.list-group-item(href="#") Dapibus ac facilisis in
-        a.list-group-item(href="#") Morbi leo risus
-        a.list-group-item(href="#") Porta ac consectetur ac
-        a.list-group-item(href="#") Vestibulum at eros
+        .ulcontent
+          .ul.list-unstyled
+            li
+              a(href="#") Item 1
+            li
+              a(href="#") Item 2
+            li
+              a(href="#") Item 3
+            li
+              a(href="#") Item 4
+
+    .panel.panel-default(style='border:0; box-shadow:3px 3px 15px -10px rgba(0, 0, 0, 0.9);')
+      .panel-body(style='padding-top:0;')
+        h3.panel-title(style='border-bottom:1px solid rgba(0, 0, 0, 0.05);padding:8px 0;margin:0 0 5px;')
+          span.glyphicon.glyphicon-triangle-right.myglyphicon(aria-hidden="true", )
+          | 友情链接
+        .ulcontent
+          .ul.list-unstyled
+            li
+              a(href="#") Item 1
+            li
+              a(href="#") Item 2
+            li
+              a(href="#") Item 3
+            li
+              a(href="#") Item 4
+
+
+      //.list-group
+      //  a.list-group-item(href="#") Cras justo odio
+      //  a.list-group-item(href="#") Dapibus ac facilisis in
+      //  a.list-group-item(href="#") Morbi leo risus
+      //  a.list-group-item(href="#") Porta ac consectetur ac
+      //  a.list-group-item(href="#") Vestibulum at eros
 
 
 
