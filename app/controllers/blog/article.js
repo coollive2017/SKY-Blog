@@ -2,21 +2,81 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const Article = mongoose.model('Article');
+const Category = mongoose.model('Category');
 
 module.exports = (app) => {
   app.use('/articles', router);
 };
 
 router.get('/', (req, res, next) => {
-  Article.find().populate('author').populate('category').exec((err, articles) => {
-    if (err) return next(err);
-    //return res.jsonp(articles);
-    res.render('blog/index', {
-      title: 'Sky-Blog',
-      articles: articles,
-      pretty:true
-    });
+  Article.find({'published' : true})
+          .sort('created')
+          .populate('author')
+          .populate('category')
+          .exec((err, articles) => {
+            if (err) return next(err);
+            //return res.jsonp(articles);
+            
+            //simple page
+            //单页数据条数，总共页数，数据总条数，
+            var pageNum = Math.abs(parseInt(req.query.page || 1, 10));
+            //console.log(parseInt(req.query.page || 1, 10));
+            var pageSize = 10;
+            var dataTotal = articles.length;
+            var pageCount = Math.ceil(dataTotal / pageSize);
+            // 临界判断
+            if( pageNum > pageCount ){
+              pageNum = pageCount;
+            }
+            // 将参数传回前段页面
+            res.render('blog/index', {
+              title: 'Sky-Blog',
+              articles: articles.slice((pageNum - 1) * pageSize, pageNum * pageSize),
+              pageNum:pageNum,
+              pageSize:pageSize,
+              pageCount:pageCount,
+              dataTotal:dataTotal,
+              pretty:true
+            });
+        });
+});
+// 分类文章查看
+router.get('/category/:name', (req, res, next) => {
+  Category.findOne({ name : req.params.name}).exec((err, category) => {
+    console.log(category.name)
+    Article.find({'published' : true, 'category' : category})
+          .sort('created')
+          .populate('author')
+          .populate('category')
+          .exec((err, articles) => {
+            if (err) return next(err);
+            //return res.jsonp(articles);
+            
+            //simple page
+            //单页数据条数，总共页数，数据总条数，
+            var pageNum = Math.abs(parseInt(req.query.page || 1, 10));
+            //console.log(parseInt(req.query.page || 1, 10));
+            var pageSize = 10;
+            var dataTotal = articles.length;
+            var pageCount = Math.ceil(dataTotal / pageSize);
+            // 临界判断
+            if( pageNum > pageCount ){
+              pageNum = pageCount;
+            }
+            // 将参数传回前段页面
+            res.render('blog/category', {
+              title: 'Sky-Blog',
+              articles: articles.slice((pageNum - 1) * pageSize, pageNum * pageSize),
+              pageNum:pageNum,
+              pageSize:pageSize,
+              pageCount:pageCount,
+              dataTotal:dataTotal,
+              category:category.name,
+              pretty:true
+            });
+        });    
   });
+  
 });
 
 // 查看

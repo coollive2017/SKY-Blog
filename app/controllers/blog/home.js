@@ -10,6 +10,7 @@ router.get('/', (req, res, next) => {
   res.redirect('/articles')
 });
 
+
 // 关于我们-
 router.get('/about', (req, res, next) => {
   res.render('about', {

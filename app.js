@@ -7,6 +7,10 @@ const mongoose = require('mongoose');
 
 mongoose.connect(config.db);
 const db = mongoose.connection;
+
+//new connet method
+// const db = mongoose.createConnection(config.db);
+
 db.on('error', () => {
   throw new Error('unable to connect to database at ' + config.db);
 });

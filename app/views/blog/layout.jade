@@ -14,11 +14,11 @@ block main
             span.icon-bar
             span.icon-bar
             span.icon-bar
-          a.navbar-brand(href='#') SKY-Blog
+          a.navbar-brand(href='/') SKY-Blog
         #navbar.navbar-collapse.collapse
           ul.nav.navbar-nav
-            li.active
-              a(href='#') 博客首页
+            li
+              a(href='/') 博客首页
             li
               form.navbar-form.navbar-left(role="search", style='')
                 .input-group
@@ -51,7 +51,7 @@ block main
   block contentAll
   .container(style='padding:0;')
     .row
-      .col-sm-9.contentLeft(style='margin:0;padding:0;')
+      .col-sm-9.contentLeft(style='padding:0;')
         block contentLeft
       .col-sm-3.contentRight
         block contentRight

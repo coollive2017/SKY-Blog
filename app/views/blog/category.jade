@@ -3,26 +3,24 @@ extends ./layout
 append css
 
 block contentAll
-  .jumbox
-    .jumbotron(style='margin:0;')
-      .container
-        h1 Hello, world!
-        h3 基于mongodb大型技术博客分享论坛的设计
-  //- .container
-  //-   ol.breadcrumb(style='background-color:#FFFFFF;margin:0;')
-  //-     span.glyphicon.glyphicon-home.myglyphicon
-  //-     |&nbsp;您当前的位置:&nbsp;
-  //-     li
-  //-       a(href="#") 首页
-  //-     li
-  //-       a(href="#") Library
-  //-     li.active Data
+  .container
+    ol.breadcrumb(style='background-color:#FFFFFF;margin:0;')
+      span.glyphicon.glyphicon-home.myglyphicon
+      |&nbsp;您当前的位置:&nbsp;
+      li
+        a(href="/") 首页
+      li
+        | 分类文章
+      li.active=category
 
 
 block contentLeft
   .articleContent
     .contentList
       .ul.list-unstyled
+        .page-header
+          h2=category
+            | 分类所有文章
         each article in articles
           li
             a(href='article/view/' + article.slug, target='_blank')
@@ -42,7 +40,7 @@ block contentLeft
               span.articleinfo-right
                 span.article-category
                   | 分类:&nbsp;
-                  a(href="articles/category/"+article.category.name, target='_blank') 
+                  a(href="../category/"+article.category.name, target='_blank')
                     =article.category.name
                 span.article-comments
                   | 评论:&nbsp;
@@ -60,18 +58,20 @@ block contentLeft
             li
               span
                 |文章总数：
-                =dataTotal 
+                =dataTotal
             li
               a(href='#', aria-label='Previous')
                 span(aria-hidden='true') « 上一页
             -var pagect = 1
+            -var path
             while pagect <= pageCount
+              -path = '../category/'+category+'?page=' + pagect
               if(pageNum == pagect)
                 li.active
-                  a(href='/articles?page=' + pagect)= pagect++
+                  a(href=path)= pagect++
               else
                 li
-                  a(href='/articles?page=' + pagect)= pagect++    
+                  a(href=path)= pagect++
             li
               a(href='#', aria-label='Next')
                 span(aria-hidden='true') 下一页 »
@@ -92,7 +92,7 @@ block contentRight
           .ul.list-unstyled
             each category in categories
               li
-                a(href="articles/category/"+category.name)
+                a(href="../category/"+category.name)
                   =category.name
 
     .panel.panel-default(style='border:0; box-shadow:3px 3px 15px -10px rgba(0, 0, 0, 0.9);')

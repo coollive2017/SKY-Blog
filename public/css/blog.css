@@ -70,6 +70,7 @@ body{
 }
 .contentLeft{
   margin: 0 auto;
+  margin-bottom: 20px;  
 }
 .articleContent{
   width: 98%;
@@ -113,13 +114,15 @@ body{
   color:#2f6f9f;
   text-decoration:none;
 }
+.contentList li:last-of-type{
+  padding:10px 5px 5px;
+  border-bottom: 0;
+  margin-bottom: 0px;
+}
 .contentlimit{
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
   overflow:hidden;
   text-overflow: ellipsis;
-  color: #5e5e5e;
+  color: #AAA;
 }
 .articleinfo{
   font-size: 0.75em;
@@ -148,6 +151,12 @@ body{
 }
 .articleinfo-right{
   float: right;
+}
+
+.pagination li{
+  border: 0;
+  padding: 0;
+  margin: 0;
 }
 
 
