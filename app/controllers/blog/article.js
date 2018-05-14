@@ -17,7 +17,7 @@ router.get('/', (req, res, next) => {
             articles = articles.slice(0, 50);
             if (err) return next(err);
             //return res.jsonp(articles);
-            
+
             //simple page
             //单页数据条数，总共页数，数据总条数，
             var pageNum = Math.abs(parseInt(req.query.page || 1, 10));
@@ -52,7 +52,7 @@ router.get('/category/:name', (req, res, next) => {
           .exec((err, articles) => {
             if (err) return next(err);
             //return res.jsonp(articles);
-            
+
             //simple page
             //单页数据条数，总共页数，数据总条数，
             var pageNum = Math.abs(parseInt(req.query.page || 1, 10));
@@ -75,21 +75,25 @@ router.get('/category/:name', (req, res, next) => {
               category:category.name,
               pretty:true
             });
-        });    
+        });
   });
-  
+
 });
 
 // 查看
 router.get('/view/:id', (req, res, next) => {
-   Article.findOne({_id : req.params.id})
+  //res.jsonp(req.params.id);
+  if(!req.params.id){
+    return next(new Error('not find article ID'));
+  }
+  Article.findOne({_id : req.params.id})
           .populate('author')
           .populate('category')
           .exec((err, article) => {
             if (err) return next(err);
-            
+
             // 将参数传回前段页面
-            res.render('blog/category', {
+            res.render('blog/view', {
               title: 'Sky-Blog',
               article: article,
               pretty:true

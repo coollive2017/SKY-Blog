@@ -23,7 +23,7 @@ block contentLeft
             | 分类所有文章
         each article in articles
           li
-            a(href='article/view/' + article.slug, target='_blank')
+            a(href='../view/' + article.id, target='_blank')
               h4
                 =article.title
             p.contentlimit
@@ -49,7 +49,7 @@ block contentLeft
                   | 浏览数:&nbsp;
                   =article.meta.favorites
                 span.showdatial
-                  a(href='article/view/' + article.slug, target='_blank') 查看全文
+                  a(href='../view/' + article.id, target='_blank') 查看全文
             .nofloat
       //-.box(style='height:1000px;')
       .paging(style='')

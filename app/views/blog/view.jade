@@ -1,0 +1,87 @@
+extends ./layout
+
+append css
+
+block contentAll
+  .container
+    ol.breadcrumb(style='background-color:#FFFFFF;margin:0;')
+      span.glyphicon.glyphicon-home.myglyphicon
+      |&nbsp;您当前的位置:&nbsp;
+      li
+        a(href="/") 首页
+      li.active
+        | 文章正文
+
+
+block contentLeft
+  .articleContent
+    .contentList
+      .page-header
+        h2=article.title
+      .articleinfo
+        span.articleinfo-left
+          span.article-userinfo
+            img.img-circle.img-responsive(src='/img/userimages/' + article.author.avatar )
+            &nbsp;&nbsp;
+            =article.author.username
+          span.article-created
+            | &nbsp;&nbsp;&nbsp;&nbsp;发表时间:&nbsp;&nbsp;
+            =moment(article.created).format('YYYY-MM-DD HH:mm:ss')
+        span.articleinfo-right
+          span.article-category
+            | 分类:&nbsp;
+            a(href="../category/" + article.category.name, target='_blank')
+              =article.category.name
+          span.article-meta
+            | 评论:&nbsp;
+            =article.comments.length || 0
+          span.article-meta
+            | 点赞:&nbsp;
+            =article.meta.favorites || 0
+      .nofloat
+      .articleText
+        =article.content
+      //-.box(style='height:1000px;')
+
+
+block contentRight
+  .row
+    .panel.panel-default(style='border:0; box-shadow:3px 3px 15px -10px rgba(0, 0, 0, 0.9);')
+      .panel-body(style='padding-top:0;')
+        h3.panel-title(style='border-bottom:1px solid rgba(0, 0, 0, 0.05);padding:8px 0;margin:0 0 5px;')
+          span.glyphicon.glyphicon-triangle-right.myglyphicon(aria-hidden="true", )
+          | 文章分类
+        .ulcontent
+          .ul.list-unstyled
+            each category in categories
+              li
+                a(href="../category/"+category.name)
+                  =category.name
+
+    .panel.panel-default(style='border:0; box-shadow:3px 3px 15px -10px rgba(0, 0, 0, 0.9);')
+      .panel-body(style='padding-top:0;')
+        h3.panel-title(style='border-bottom:1px solid rgba(0, 0, 0, 0.05);padding:8px 0;margin:0 0 5px;')
+          span.glyphicon.glyphicon-triangle-right.myglyphicon(aria-hidden="true", )
+          | 友情链接
+        .ulcontent
+          .ul.list-unstyled
+            li
+              a(href="#") Item 1
+            li
+              a(href="#") Item 2
+            li
+              a(href="#") Item 3
+            li
+              a(href="#") Item 4
+
+      //.list-group
+      //  a.list-group-item(href="#") Cras justo odio
+      //  a.list-group-item(href="#") Dapibus ac facilisis in
+      //  a.list-group-item(href="#") Morbi leo risus
+      //  a.list-group-item(href="#") Porta ac consectetur ac
+      //  a.list-group-item(href="#") Vestibulum at eros
+
+
+
+
+
