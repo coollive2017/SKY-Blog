@@ -7,13 +7,14 @@ const Category = mongoose.model('Category');
 module.exports = (app) => {
   app.use('/articles', router);
 };
-
+// 首页文章
 router.get('/', (req, res, next) => {
   Article.find({'published' : true})
           .sort('created')
           .populate('author')
           .populate('category')
           .exec((err, articles) => {
+            articles = articles.slice(0, 50);
             if (err) return next(err);
             //return res.jsonp(articles);
             
@@ -80,11 +81,24 @@ router.get('/category/:name', (req, res, next) => {
 });
 
 // 查看
-router.get('/view', (req, res, next) => {
-  res.render('about', {
-    title: 'Sky-Blog',
-    pretty:true
-  });
+router.get('/view/:id', (req, res, next) => {
+   Article.findOne({_id : req.params.id})
+          .populate('author')
+          .populate('category')
+          .exec((err, article) => {
+            if (err) return next(err);
+            
+            // 将参数传回前段页面
+            res.render('blog/category', {
+              title: 'Sky-Blog',
+              article: article,
+              pretty:true
+            });
+        });    
+  // res.render('about', {
+  //   title: 'Sky-Blog',
+  //   pretty:true
+  // });
 });
 
 // 评论
