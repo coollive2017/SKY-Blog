@@ -25,19 +25,23 @@ block contentLeft
             &nbsp;&nbsp;
             =article.author.username
           span.article-created
-            | &nbsp;&nbsp;&nbsp;&nbsp;发表时间:&nbsp;&nbsp;
+            &nbsp;&nbsp
+            i.fa.fa-clock-o &nbsp;
             =moment(article.created).format('YYYY-MM-DD HH:mm:ss')
+            &nbsp;&nbsp
         span.articleinfo-right
           span.article-category
-            | 分类:&nbsp;
+            i.fa.fa-file-code-o &nbsp;
             a(href="../category/" + article.category.name, target='_blank')
               =article.category.name
           span.article-meta
-            | 评论:&nbsp;
+            i.fa.fa-comments-o &nbsp;&nbsp;
             =article.comments.length || 0
+            &nbsp;&nbsp
           span.article-meta
-            | 点赞:&nbsp;
+            i.fa.fa-star &nbsp;&nbsp;
             =article.meta.favorites || 0
+            &nbsp;&nbsp
       .nofloat
       .articleText
         =article.content
@@ -73,13 +77,6 @@ block contentRight
               a(href="#") Item 3
             li
               a(href="#") Item 4
-
-      //.list-group
-      //  a.list-group-item(href="#") Cras justo odio
-      //  a.list-group-item(href="#") Dapibus ac facilisis in
-      //  a.list-group-item(href="#") Morbi leo risus
-      //  a.list-group-item(href="#") Porta ac consectetur ac
-      //  a.list-group-item(href="#") Vestibulum at eros
 
 
 

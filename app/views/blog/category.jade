@@ -34,20 +34,24 @@ block contentLeft
                   img.img-circle.img-responsive(src='/img/userimages/' + article.author.avatar )
                   &nbsp;&nbsp;
                   =article.author.username
+                  &nbsp;&nbsp;
                 span.article-created
-                  | 发表时间:&nbsp;
+                  i.fa.fa-clock-o &nbsp;
                   =moment(article.created).format('YYYY-MM-DD HH:mm:ss')
               span.articleinfo-right
                 span.article-category
-                  | 分类:&nbsp;
+                  i.fa.fa-file-code-o &nbsp;
                   a(href="../category/"+article.category.name, target='_blank')
                     =article.category.name
+                  &nbsp;&nbsp;&nbsp
                 span.article-comments
-                  | 评论:&nbsp;
-                  =article.comments
+                  i.fa.fa-comments-o &nbsp;&nbsp;
+                  =article.comments.length || 0
+                  &nbsp;&nbsp
                 span.article-meta
-                  | 浏览数:&nbsp;
-                  =article.meta.favorites
+                  i.fa.fa-star &nbsp;&nbsp;
+                  =article.meta.favorites || 0
+                  &nbsp;&nbsp
                 span.showdatial
                   a(href='../view/' + article.id, target='_blank') 查看全文
             .nofloat
