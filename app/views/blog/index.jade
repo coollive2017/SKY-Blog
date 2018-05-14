@@ -26,7 +26,7 @@ block contentLeft
         each article in articles
           //- 单个文章列表结构
           li
-            a(href='articles/view/' + article.id, target='_blank')
+            a(href='articles/view/' + article.slug, target='_blank')
               h4
                 =article.title
             p.contentlimit
@@ -55,7 +55,7 @@ block contentLeft
                   =article.meta.favorites || 0
                   &nbsp;&nbsp
                 span.showdatial
-                  a(href='articles/view/' + article.id, target='_blank') 查看全文
+                  a(href='articles/view/' + article.slug, target='_blank') 查看全文
             .nofloat
       //-.box(style='height:1000px;')
       .paging(style='')

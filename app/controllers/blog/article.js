@@ -86,7 +86,14 @@ router.get('/view/:id', (req, res, next) => {
   if(!req.params.id){
     return next(new Error('not find article ID'));
   }
-  Article.findOne({_id : req.params.id})
+  // id与slug兼容
+  var conditions = {};
+  try {
+    conditions._id = mongoose.Types.ObjectId(req.params.id);
+  } catch(e) {
+    conditions.slug = req.params.id;
+  }
+  Article.findOne(conditions)
           .populate('author')
           .populate('category')
           .exec((err, article) => {
@@ -99,10 +106,6 @@ router.get('/view/:id', (req, res, next) => {
               pretty:true
             });
         });    
-  // res.render('about', {
-  //   title: 'Sky-Blog',
-  //   pretty:true
-  // });
 });
 
 // 评论

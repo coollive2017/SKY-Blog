@@ -17,7 +17,8 @@ block contentLeft
   .articleContent
     .contentList
       .page-header
-        h2=article.title
+        .article-header
+          h2=article.title
       .articleinfo
         span.articleinfo-left
           span.article-userinfo
@@ -43,7 +44,7 @@ block contentLeft
             =article.meta.favorites || 0
             &nbsp;&nbsp
       .nofloat
-      .articleText
+      .article-text
         =article.content
       //-.box(style='height:1000px;')
 

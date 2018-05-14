@@ -23,7 +23,7 @@ block contentLeft
             | 分类所有文章
         each article in articles
           li
-            a(href='../view/' + article.id, target='_blank')
+            a(href='../view/' + article.slug, target='_blank')
               h4
                 =article.title
             p.contentlimit
@@ -34,7 +34,7 @@ block contentLeft
                   img.img-circle.img-responsive(src='/img/userimages/' + article.author.avatar )
                   &nbsp;&nbsp;
                   =article.author.username
-                  &nbsp;&nbsp;
+                  &nbsp;&nbsp
                 span.article-created
                   i.fa.fa-clock-o &nbsp;
                   =moment(article.created).format('YYYY-MM-DD HH:mm:ss')
@@ -53,7 +53,7 @@ block contentLeft
                   =article.meta.favorites || 0
                   &nbsp;&nbsp
                 span.showdatial
-                  a(href='../view/' + article.id, target='_blank') 查看全文
+                  a(href='../view/' + article.slug, target='_blank') 查看全文
             .nofloat
       //-.box(style='height:1000px;')
       .paging(style='')
