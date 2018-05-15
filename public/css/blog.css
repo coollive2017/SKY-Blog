@@ -130,6 +130,7 @@ body{
   height: 2em;
   line-height: 2em;
   color: #252d31;
+  margin: 0 1em;
 }
 .article-header{
   text-align: center;
@@ -137,7 +138,7 @@ body{
 .article-text{
   text-indent: 2em;
   text-align: justify;
-  margin: 20px 0 0;
+  margin: 20px 1em 0;
 }
 .article-userinfo > img {
   height: 2em;
