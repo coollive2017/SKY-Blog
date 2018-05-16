@@ -19,33 +19,99 @@ block contentLeft
       .page-header
         .article-header
           h2=article.title
+          p.articleID.hidden=article.id
+          p.articleSLUG.hidden=article.slug
       .articleinfo
         span.articleinfo-left
           span.article-userinfo
-            img.img-circle.img-responsive(src='/img/userimages/' + article.author.avatar )
-            &nbsp;&nbsp;
+            img.img-circle.img-responsive(src='/img/userimages/'+article.author.avatar)
+            | &nbsp;&nbsp;
             =article.author.username
           span.article-created
-            &nbsp;&nbsp
+            | &nbsp;&nbsp;
             i.fa.fa-clock-o &nbsp;
             =moment(article.created).format('YYYY-MM-DD HH:mm:ss')
-            &nbsp;&nbsp
+            | &nbsp;&nbsp;
         span.articleinfo-right
           span.article-category
             i.fa.fa-file-code-o &nbsp;
-            a(href="../category/" + article.category.name, target='_blank')
+            a(href="../category/"+article.category.name, target='_blank')
               =article.category.name
           span.article-meta
             i.fa.fa-comments-o &nbsp;&nbsp;
-            =article.comments.length || 0
-            &nbsp;&nbsp
+            span#comments-count
+              =article.comments.length || 0
+            | &nbsp;&nbsp;
+          span.article-meta
+            i.fa.fa-thumbs-up &nbsp;&nbsp;
+            span#favorites-count
+              =article.meta.favorites || 0
+            | &nbsp;&nbsp;
           span.article-meta
             i.fa.fa-star &nbsp;&nbsp;
-            =article.meta.favorites || 0
-            &nbsp;&nbsp
+            span#collect-count
+              =article.meta.collect.count || 0
+            | &nbsp;&nbsp;
       .nofloat
+      //-article-text
       .article-text
         =article.content
+      .article-bottom
+        .article-mate-botton
+          a.dofavorite(href=`javascript:dofavorite()`)
+            i.fa.fa-thumbs-o-up.fa-2x
+          a.dostar
+            i.fa.fa-star-o.fa-2x
+          script(type="text/javascript").
+            function dofavorite(){
+              var id = $('.articleID').text();
+              var slug = $('.articleSLUG').text();
+              if(id===null||id===''){
+                id = slug;
+              }
+              $.ajax({
+                url: './favorite/'+id,
+                type: 'GET',
+                success:function(msg){
+                  $('#favorites-count').text(msg.nowFavorites);
+                  console.log(msg);
+                }
+              });
+            }
+
+
+        .bdsharebuttonbox
+          a.bds_more(href='#', data-cmd='more') 分享到：
+          a.bds_qzone(href='#', data-cmd='qzone', title='分享到QQ空间') QQ空间
+          a.bds_tsina(href='#', data-cmd='tsina', title='分享到新浪微博') 新浪微博
+          a.bds_tqq(href='#', data-cmd='tqq', title='分享到腾讯微博') 腾讯微博
+          a.bds_renren(href='#', data-cmd='renren', title='分享到人人网') 人人网
+          a.bds_weixin(href='#', data-cmd='weixin', title='分享到微信') 微信
+        script(type="text/javascript").
+          window._bd_share_config={
+            "common":{
+              "bdSnsKey":{},
+              "bdText":"",
+              "bdMini":"2",
+              "bdMiniList":false,
+              "bdPic":"",
+              "bdStyle":"1",
+              "bdSize":"24"},
+              "share":{"bdSize":16},
+              "image":{
+                "viewList":["qzone","tsina","tqq","renren","weixin"],
+                "viewText":"分享到：",
+                "viewSize":"24"
+              },
+              "selectShare":{
+                "bdContainerClass":null,
+                "bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]
+              }
+            };
+          with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+
+
+
       //-.box(style='height:1000px;')
 
 
@@ -78,6 +144,7 @@ block contentRight
               a(href="#") Item 3
             li
               a(href="#") Item 4
+
 
 
 

@@ -101,21 +101,52 @@ router.get('/view/:id', (req, res, next) => {
 
             // 将参数传回前段页面
             res.render('blog/view', {
-              title: 'Sky-Blog',
+              title: 'Sky-Blog: '+ article.title,
               article: article,
               pretty:true
             });
-        });    
+        });
 });
+
+// article-do-favorite
+router.get('/view/favorite/:id', (req, res, next) => {
+  //res.jsonp(req.params.id);
+  if(!req.params.id){
+    return next(new Error('not find article ID'));
+  }
+  // id与slug兼容
+  var conditions = {};
+  try {
+    conditions._id = mongoose.Types.ObjectId(req.params.id);
+  } catch(e) {
+    conditions.slug = req.params.id;
+  }
+  Article.findOne(conditions)
+          .populate('author')
+          .populate('category')
+          .exec((err, article) => {
+            console.log(article.meta.favorites)
+            if (err) return next(err);
+            article.meta.favorites = article.meta.favorites ? article.meta.favorites+1 : 1;
+            article.markModified('meta');
+            article.save();
+            // 将参数传回前段页面
+            res.jsonp({
+              'status':true,
+              'nowFavorites':article.meta.favorites
+            });
+        });
+});
+
 
 // 评论
 router.get('/comment', (req, res, next) => {
 
 });
 // 喜欢
-router.get('/favourite', (req, res, next) => {
+// router.get('/favourite', (req, res, next) => {
 
-});
+// });
 
 
 

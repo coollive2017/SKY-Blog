@@ -32,26 +32,26 @@ block contentLeft
               span.articleinfo-left
                 span.article-userinfo
                   img.img-circle.img-responsive(src='/img/userimages/' + article.author.avatar )
-                  &nbsp;&nbsp;
+                  | &nbsp;&nbsp;
                   =article.author.username
-                  &nbsp;&nbsp
+                  | &nbsp;&nbsp
                 span.article-created
-                  i.fa.fa-clock-o &nbsp;
+                  i.fa.fa-clock-o &nbsp&nbsp;
                   =moment(article.created).format('YYYY-MM-DD HH:mm:ss')
               span.articleinfo-right
                 span.article-category
                   i.fa.fa-file-code-o &nbsp;
                   a(href="../category/"+article.category.name, target='_blank')
                     =article.category.name
-                  &nbsp;&nbsp;&nbsp
+                  | &nbsp;&nbsp;&nbsp
                 span.article-comments
                   i.fa.fa-comments-o &nbsp;&nbsp;
                   =article.comments.length || 0
-                  &nbsp;&nbsp
+                  | &nbsp;&nbsp
                 span.article-meta
-                  i.fa.fa-star &nbsp;&nbsp;
+                  i.fa.fa-thumbs-up &nbsp;&nbsp;
                   =article.meta.favorites || 0
-                  &nbsp;&nbsp
+                  | &nbsp;&nbsp
                 span.showdatial
                   a(href='../view/' + article.slug, target='_blank') 查看全文
             .nofloat
@@ -115,12 +115,7 @@ block contentRight
             li
               a(href="#") Item 4
 
-      //.list-group
-      //  a.list-group-item(href="#") Cras justo odio
-      //  a.list-group-item(href="#") Dapibus ac facilisis in
-      //  a.list-group-item(href="#") Morbi leo risus
-      //  a.list-group-item(href="#") Porta ac consectetur ac
-      //  a.list-group-item(href="#") Vestibulum at eros
+
 
 
 

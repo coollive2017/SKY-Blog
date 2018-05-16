@@ -34,16 +34,22 @@ User.findOne((err, user) => {
     }
     categories.forEach((category) => {
       // 生成数据数据
-      for(var i = 0; i < 20; i++){
+      for(var i = 0; i < 60; i++){
         var title = lormipsum({count:1, units: 'sentences'});
         var article = new Article({
           title:title,
           slug:slug(title),
-          content:lormipsum({count:30, units: 'sentences'}),
+          content:lormipsum({count:50, units: 'sentences'}),
           category: category,
           author: user,
           published: true,
-          meta: {'favorites':1,},
+          meta: {
+            'favorites':1,
+            'collect':{
+              'count':0,
+              'user':[]  
+            }  
+          },
           comments: [],
           created: new Date(),
         });

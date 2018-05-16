@@ -130,7 +130,7 @@ body{
   height: 2em;
   line-height: 2em;
   color: #252d31;
-  margin: 0 1em;
+  margin: 0 1em;s
 }
 .article-header{
   text-align: center;
@@ -159,6 +159,16 @@ body{
 }
 .articleinfo-right{
   float: right;
+}
+.article-bottom{
+  margin: 20px 1em 0;
+}
+.article-mate-botton{
+  text-align: center;
+  padding-bottom:2em ;
+}
+.article-mate-botton > a{
+  padding: 1em 2em;
 }
 
 .pagination li{
