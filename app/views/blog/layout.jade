@@ -1,7 +1,7 @@
 extends ../layout
 
 append css
-  //link(rel='stylesheet', href='/css/jquery.shadow.css')
+  link(rel='stylesheet', href='/components/sweetalert2/dist/sweetalert2.css')
 block main
 
   block header
@@ -42,7 +42,8 @@ block main
                 li
                   a(href='#') 我的博客
                 li.divider(role='separator')
-                li.dropdown-header 用户名称
+                li.dropdown-header 
+                  span#usernameID admin
                 li
                   a(href='#') 个人设置
                 li
@@ -64,7 +65,7 @@ block main
         p.text-muted Place sticky footer content here.
 
 block scriptsAfter
-  //script(src='/js/jquery.shadow.js')
+  script(src='/components/sweetalert2/dist/sweetalert2.js')
 
 
 

@@ -58,9 +58,9 @@ block contentLeft
         =article.content
       .article-bottom
         .article-mate-botton
-          a.dofavorite(href=`javascript:dofavorite()`)
+          a.dofavorite(href='javascript:dofavorite()')
             i.fa.fa-thumbs-o-up.fa-2x
-          a.dostar
+          a.docollect(href='javascript:docollect()')
             i.fa.fa-star-o.fa-2x
           script(type="text/javascript").
             function dofavorite(){
@@ -74,11 +74,44 @@ block contentLeft
                 type: 'GET',
                 success:function(msg){
                   $('#favorites-count').text(msg.nowFavorites);
-                  console.log(msg);
+                  //- console.log(msg);
                 }
               });
             }
-
+            function docollect(){
+              var id = $('.articleID').text();
+              var slug = $('.articleSLUG').text();
+              var userID = $('#usernameID').text();
+              console.log(userID);
+              if(id===null||id===''){
+                id = slug;
+              }
+              $.ajax({
+                url: './collect',
+                
+                type: 'post',
+                data:({
+                  'id':id,
+                  'username':userID
+                }),
+                success:function(msg){
+                  if(!msg.status){
+                    swal({
+                      title: '您已经收藏了，该文章！',
+                      type: 'warning',
+                    });
+                  }else{
+                    $('#collect-count').text(msg.nowCount);
+                    swal({
+                      title: '您成功收藏了，该文章！',
+                      type: 'success',
+                    });
+                  }
+                  //- console.log(msg);
+                }
+              });
+            }
+          
 
         .bdsharebuttonbox
           a.bds_more(href='#', data-cmd='more') 分享到：

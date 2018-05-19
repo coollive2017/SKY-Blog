@@ -35,9 +35,9 @@ block contentLeft
               span.articleinfo-left
                 span.article-userinfo
                   img.img-circle.img-responsive(src='/img/userimages/' + article.author.avatar )
-                  &nbsp;&nbsp;
+                  | &nbsp;&nbsp;
                   =article.author.username
-                  &nbsp;&nbsp;
+                  | &nbsp;&nbsp;
                 span.article-created
                   i.fa.fa-clock-o &nbsp;
                   =moment(article.created).format('YYYY-MM-DD HH:mm:ss')
@@ -49,11 +49,11 @@ block contentLeft
                 span.article-comments
                   i.fa.fa-comments-o &nbsp;&nbsp;
                   =article.comments.length || 0
-                  &nbsp;&nbsp
+                  | &nbsp;&nbsp
                 span.article-meta
                   i.fa.fa-thumbs-up  &nbsp;&nbsp;
                   =article.meta.favorites || 0
-                  &nbsp;&nbsp
+                  | &nbsp;&nbsp
                 span.showdatial
                   a(href='articles/view/' + article.slug, target='_blank') 查看全文
             .nofloat
