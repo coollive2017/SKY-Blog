@@ -87,12 +87,7 @@ router.get('/view/:id', (req, res, next) => {
     return next(new Error('not find article ID'));
   }
   // id与slug兼容
-  var conditions = {};
-  try {
-    conditions._id = mongoose.Types.ObjectId(req.params.id);
-  } catch(e) {
-    conditions.slug = req.params.id;
-  }
+  var conditions = compatibilitySlugID(req.params.id);
   Article.findOne(conditions)
           .populate('author')
           .populate('category')
@@ -115,12 +110,8 @@ router.get('/view/favorite/:id', (req, res, next) => {
     return next(new Error('not find article ID'));
   }
   // id与slug兼容
-  var conditions = {};
-  try {
-    conditions._id = mongoose.Types.ObjectId(req.params.id);
-  } catch(e) {
-    conditions.slug = req.params.id;
-  }
+  var conditions = compatibilitySlugID(req.params.id);
+
   Article.findOne(conditions)
           .populate('author')
           .populate('category')
@@ -143,12 +134,8 @@ router.post('/view/collect', (req, res, next) => {
     return next(new Error('not find article ID'));
   }
   // id与slug兼容
-  var conditions = {};
-  try {
-    conditions._id = mongoose.Types.ObjectId(req.body.id);
-  } catch(e) {
-    conditions.slug = req.body.id;
-  }
+  var conditions = compatibilitySlugID(req.body.id);
+  
   Article.findOne(conditions)
           .exec((err, article) => {
             //console.log(article.meta.collect);
@@ -188,6 +175,18 @@ router.post('/view/collect', (req, res, next) => {
 router.get('/comment', (req, res, next) => {
 
 });
+
+
+// 公用方法
+function compatibilitySlugID (idAndSlug) {
+  var conditions = {};
+  try {
+    conditions._id = mongoose.Types.ObjectId(idAndSlug);
+  } catch(e) {
+    conditions.slug = idAndSlug;
+  }
+  return conditions;
+}
 
 
 
