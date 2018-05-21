@@ -2,6 +2,11 @@ extends ../layout
 
 append css
   link(rel='stylesheet', href='/components/sweetalert2/dist/sweetalert2.css')
+  link(rel='stylesheet', href='/css/jquery.shadow.css')
+
+append beforejs
+  script(type="text/javascript", src='/components/sweetalert2/dist/sweetalert2.min.js')
+  script(type="text/javascript", src='/js/jquery.shadow.js')
 block main
 
   block header
@@ -59,13 +64,13 @@ block main
 
 
   block footer
-    footer.footer.navbar-static-bottom
+    footer.footer.navbar-static-bottom(style='background-color:#FFF;text-align:center; font-color:#FFF;')
       hr.footerhr
       .container
-        p.text-muted Place sticky footer content here.
+        p.text-muted © CopyRight 2018.03-2018.04, XZQ Inc.All Rights Reserved.
+        p.text-muted 基于mongodb大型技术博客分享论坛的设计
 
-block scriptsAfter
-  script(src='/components/sweetalert2/dist/sweetalert2.js')
+  
 
 
 

@@ -5,18 +5,18 @@ html(lang='en')
     meta(http-equiv='X-UA-Compatible', content='IE=edge')
     meta(name='viewport', content='width=device-width, initial-scale=1')
     link(rel="shortcut icon", href="/img/favicon.ico", type="image/x-icon")
-    script(src='/components/jquery/dist/jquery.js')
     title= title
-    
+    block beforejs
+      script(src='/components/jquery/dist/jquery.js')
     block css
       link(rel='stylesheet', href='/css/blog.css')
       link(rel='stylesheet', href='/components/bootstrap/dist/css/bootstrap.css')
       link(rel='stylesheet', href='/components/font-awesome/css/font-awesome.css')
 
-  body
+  body(style='background-color:#EEEEEE;')
     .maincontent
       block main
-  
+
     block js
       script(src='/components/bootstrap/dist/js/bootstrap.js')
       if ENV_DEVELOPMENT

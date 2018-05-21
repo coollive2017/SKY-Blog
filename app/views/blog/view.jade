@@ -1,17 +1,16 @@
 extends ./layout
 
 append css
-
+  link(rel='stylesheet', href='/components/summernote/dist/summernote.css')
 block contentAll
   .container
-    ol.breadcrumb(style='background-color:#FFFFFF;margin:0;')
+    ol.breadcrumb(style='margin:1em 0 1em;')
       span.glyphicon.glyphicon-home.myglyphicon
       |&nbsp;您当前的位置:&nbsp;
       li
         a(href="/") 首页
       li.active
         | 文章正文
-
 
 block contentLeft
   .articleContent
@@ -88,7 +87,6 @@ block contentLeft
               }
               $.ajax({
                 url: './collect',
-                
                 type: 'post',
                 data:({
                   'id':id,
@@ -96,13 +94,13 @@ block contentLeft
                 }),
                 success:function(msg){
                   if(!msg.status){
-                    swal({
+                    Swal({
                       title: '您已经收藏了，该文章！',
                       type: 'warning',
                     });
                   }else{
                     $('#collect-count').text(msg.nowCount);
-                    swal({
+                    Swal({
                       title: '您成功收藏了，该文章！',
                       type: 'success',
                     });
@@ -120,6 +118,7 @@ block contentLeft
           a.bds_tqq(href='#', data-cmd='tqq', title='分享到腾讯微博') 腾讯微博
           a.bds_renren(href='#', data-cmd='renren', title='分享到人人网') 人人网
           a.bds_weixin(href='#', data-cmd='weixin', title='分享到微信') 微信
+        //- 分享js    
         script(type="text/javascript").
           window._bd_share_config={
             "common":{
@@ -141,11 +140,40 @@ block contentLeft
                 "bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]
               }
             };
-          with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+          with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)] 
 
+        .article-comments
+          h3 用户评论
+          .article-comments-list
+            if article.comments.length
+              each comment in article.comments
+                .article-comments-item
+                  h4.article-comments-username
+                  p.article-comments-content= comment.content
+            else
+              p.alert.alert-info 该文章沙发还在，快来坐上沙发！
+          h3 添加评论     
+          form.article-comments-form.form-horizontal(action='./comment/'+ article.id, method='post')
+            .form-group(style='margin-bottom:0;')
+              label.col-sm-1.control-label(for="inputuser")
+                //- 登录后修改
+                img.img-circle.img-responsive(src='/img/userimages/'+article.author.avatar)
+              |     
+              .col-sm-11
+                p.form-control-static#inputuser=article.author.username
+            |   
+            .form-group(style='margin-bottom:0;') 
+              .col-sm-12
+                label.control-label(for="editortext") 
+                textarea#editortext.form-control
+            |   
+            .form-group(style='margin-bottom:0;')
+              .col-sm-offset-10.col-sm-2
+                button.btn.btn-default(type="submit") 提交评论
 
 
       //-.box(style='height:1000px;')
+
 
 
 block contentRight
@@ -161,8 +189,9 @@ block contentRight
               li
                 a(href="../category/"+category.name)
                   =category.name
-
-    .panel.panel-default(style='border:0; box-shadow:3px 3px 15px -10px rgba(0, 0, 0, 0.9);')
+                  //- (style='border:0; box-shadow:3px 3px 15px -10px rgba(0, 0, 0, 0.9);')
+      
+    .panel.panel-default.box.sides-hz-1.jquery-shadow-sides.jquery-shadow-sides-hz-1
       .panel-body(style='padding-top:0;')
         h3.panel-title(style='border-bottom:1px solid rgba(0, 0, 0, 0.05);padding:8px 0;margin:0 0 5px;')
           span.glyphicon.glyphicon-triangle-right.myglyphicon(aria-hidden="true", )
@@ -178,6 +207,12 @@ block contentRight
             li
               a(href="#") Item 4
 
+block scriptsAfter
+  script(type="text/javascript", src="/components/summernote/dist/summernote.js") 
+  script(type="text/javascript").
+    $(document).ready(function() {
+      $('#editortext').summernote();
+    })
 
 
 
