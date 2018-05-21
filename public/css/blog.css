@@ -93,14 +93,14 @@ body{
 
 /*contentList列表的CSS样式*/
 .contentList{
-  padding: 0 15px;
+  padding: 0 15px 1em;
   margin: 0 auto;
 }
 .contentList li{
   padding:10px 5px 5px;
   border-bottom: 1px solid #DDDDDD;
   margin-bottom: 5px;
-  /*box-shadow:0 1px 15px -10px rgba(0, 0, 0, 0.9);*/
+  box-shadow:0 1px 15px -10px rgba(0, 0, 0, 0.9);
 
 }
 .contentList li h4:hover:visited:after{
@@ -142,6 +142,7 @@ body{
 }
 .article-userinfo > img {
   height: 2em;
+  width: 2em;
   display: inline-block;
 }
 .articleinfo > .articleinfo-left > span,.articleinfo > .articleinfo-right > span{
