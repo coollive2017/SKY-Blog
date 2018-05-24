@@ -2,6 +2,11 @@ extends ./layout
 
 append css
   link(rel='stylesheet', href='/components/summernote/dist/summernote.css')
+  link(rel='stylesheet', href='/components/toopay-bootstrap-markdown/css/bootstrap-markdown.min.css')
+append beforjs
+  script(src='/components/toopay-bootstrap-markdown/js/bootstrap-markdown.js')
+  script(src='/components/toopay-bootstrap-markdown/locale/bootstrap-markdown.zh.js')
+
 block contentAll
   .container
     ol.breadcrumb(style='margin:1em 0 1em;')
@@ -148,28 +153,32 @@ block contentLeft
             if article.comments.length
               each comment in article.comments
                 .article-comments-item
-                  h4.article-comments-username
-                  p.article-comments-content= comment.content
+                  h4.article-comments-username=comment.username
+                  .article-comments-content!=markdown.toHTML(comment.content)
+                    
             else
               p.alert.alert-info 该文章沙发还在，快来坐上沙发！
+            
+
+
           h3 添加评论     
-          form.article-comments-form.form-horizontal(action='./comment/'+ article.id, method='post')
+          form.article-comments-form.form-horizontal(action='./comment/'+ article.id, enctype="multipart/form-data", method='post')
             .form-group(style='margin-bottom:0;')
               label.col-sm-1.control-label(for="inputuser")
                 //- 登录后修改
                 img.img-circle.img-responsive(src='/img/userimages/'+article.author.avatar)
               |     
               .col-sm-11
-                p.form-control-static#inputuser=article.author.username
+                input.form-control#inputuser(type='hidden', name='username', value=article.author.username)
+                p.form-control-static=article.author.username
             |   
             .form-group(style='margin-bottom:0;') 
               .col-sm-12
                 label.control-label(for="editortext") 
-                textarea#editortext.form-control
+                textarea#editortext.form-control(name='editortext',data-provide="markdown")
             |   
-            .form-group(style='margin-bottom:0;')
-              .col-sm-offset-10.col-sm-2
-                button.btn.btn-default(type="submit") 提交评论
+            .article-comments-form-button
+              button.btn.btn-default(type="submit") 提交评论
 
 
       //-.box(style='height:1000px;')
@@ -208,10 +217,10 @@ block contentRight
               a(href="#") Item 4
 
 block scriptsAfter
-  script(type="text/javascript", src="/components/summernote/dist/summernote.js") 
+  //script(type="text/javascript", src="/components/summernote/dist/summernote.js") 
   script(type="text/javascript").
     $(document).ready(function() {
-      $('#editortext').summernote();
+      $("#editortext").markdown({autofocus:false,savable:false,language:'zh'})  
     })
 
 

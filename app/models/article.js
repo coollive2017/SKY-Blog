@@ -17,9 +17,8 @@ const ArticleSchema = new Schema({
   meta: { type:Schema.Types.Mixed, required:true },
   comments: [ Schema.Types.Mixed ],
   created: { type: Date },
-
-
-});
+  
+},{usePushEach: true});
 
 ArticleSchema.virtual('date')
   .get(() => this._id.getTimestamp());

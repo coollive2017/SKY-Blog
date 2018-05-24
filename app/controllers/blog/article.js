@@ -1,8 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
+const markdown = require('markdown').markdown;
+const formidable = require('formidable');
 const Article = mongoose.model('Article');
 const Category = mongoose.model('Category');
+
 
 module.exports = (app) => {
   app.use('/articles', router);
@@ -77,7 +80,6 @@ router.get('/category/:name', (req, res, next) => {
             });
         });
   });
-
 });
 
 // 查看
@@ -135,7 +137,7 @@ router.post('/view/collect', (req, res, next) => {
   }
   // id与slug兼容
   var conditions = compatibilitySlugID(req.body.id);
-  
+
   Article.findOne(conditions)
           .exec((err, article) => {
             //console.log(article.meta.collect);
@@ -160,20 +162,61 @@ router.post('/view/collect', (req, res, next) => {
               return res.jsonp({
                 'status':true,
                 'nowCount':article.meta.collect.count
-              });  
+              });
             }else{
               return res.jsonp({
                 'status':false,
                 'nowCount':article.meta.collect.count
               });
             }
-            
+
         });
 });
 
 // 评论
-router.get('/comment', (req, res, next) => {
+router.post('/view/comment/:id', (req, res, next) => {
+  console.log(req.params.id);
+  if(!req.params.id){
+    return next(new Error('not find article ID'));
+  }
+  // id与slug兼容
+  var conditions = compatibilitySlugID(req.params.id);
 
+  var form = new formidable.IncomingForm();
+  form.parse(req, function (err, fiedls, files) {
+
+    if(err){
+      return console.log(err);
+    }
+    Article.findOne(conditions)
+          .exec((err, article) => {
+            //console.log(article.meta.favorites)
+            if (err) return next(err);
+            var comment = {
+              "username":fiedls.username,
+              "avatar":fiedls.avatar || 'default',
+              "content": fiedls.editortext,
+            }
+            article.comments.push(comment);
+            article.markModified('comments');
+            article.save(function (err, article) {
+              if(err) {
+                console.log(err);
+              }
+              console.log(article);
+              res.redirect('../'+ article._id);
+            });
+            return ;
+            // 将参数传回前段页面
+            // return res.render('view'){
+            //   title: 'Sky-Blog: '+ article.title,
+            //   article: article,
+            //   pretty:true
+            // });
+        });
+  });
+
+  
 });
 
 

@@ -10,6 +10,7 @@ const bodyParser = require('body-parser');
 const compress = require('compression');
 const methodOverride = require('method-override');
 const mongoose = require('mongoose');
+const markdown = require('markdown').markdown;
 const Category = mongoose.model('Category');
 
 module.exports = (app, config) => {
@@ -24,6 +25,7 @@ module.exports = (app, config) => {
     app.locals.path = req.path;
     app.locals.moment = moment;
     app.locals.truncate = truncate;
+    app.locals.markdown = markdown;
     //console.log('app.locals.path: ' + app.locals.path );
     Category.find((err, categories) => {
       if(err) return next(err);
