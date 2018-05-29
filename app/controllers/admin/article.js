@@ -8,7 +8,7 @@ const Category = mongoose.model('Category');
 
 
 module.exports = (app) => {
-  app.use('/articles', router);
+  app.use('/admin/articles', router);
 };
 // 首页文章
 router.get('/', (req, res, next) => {
@@ -33,7 +33,7 @@ router.get('/', (req, res, next) => {
               pageNum = pageCount;
             }
             // 将参数传回前段页面
-            return res.render('blog/index', {
+            return res.render('admin/article/article', {
               title: 'Sky-Blog',
               articles: articles.slice((pageNum - 1) * pageSize, pageNum * pageSize),
               pageNum:pageNum,
@@ -43,43 +43,6 @@ router.get('/', (req, res, next) => {
               pretty:true
             });
         });
-});
-// 分类文章查看
-router.get('/category/:name', (req, res, next) => {
-  Category.findOne({ name : req.params.name}).exec((err, category) => {
-    console.log(category.name)
-    Article.find({'published' : true, 'category' : category})
-          .sort('created')
-          .populate('author')
-          .populate('category')
-          .exec((err, articles) => {
-            if (err) return next(err);
-            //return res.jsonp(articles);
-
-            //simple page
-            //单页数据条数，总共页数，数据总条数，
-            var pageNum = Math.abs(parseInt(req.query.page || 1, 10));
-            //console.log(parseInt(req.query.page || 1, 10));
-            var pageSize = 10;
-            var dataTotal = articles.length;
-            var pageCount = Math.ceil(dataTotal / pageSize);
-            // 临界判断
-            if( pageNum > pageCount ){
-              pageNum = pageCount;
-            }
-            // 将参数传回前段页面
-            return res.render('blog/category', {
-              title: 'Sky-Blog',
-              articles: articles.slice((pageNum - 1) * pageSize, pageNum * pageSize),
-              pageNum:pageNum,
-              pageSize:pageSize,
-              pageCount:pageCount,
-              dataTotal:dataTotal,
-              category:category.name,
-              pretty:true
-            });
-        });
-  });
 });
 
 // 查看
@@ -106,38 +69,17 @@ router.get('/view/:id', (req, res, next) => {
 });
 
 // article-do-favorite-点赞
-router.get('/view/favorite/:id', (req, res, next) => {
+router.post('/edit/:id', (req, res, next) => {
   //res.jsonp(req.params.id);
-  if(!req.params.id){
-    return next(new Error('not find article ID'));
-  }
-  // id与slug兼容
-  var conditions = compatibilitySlugID(req.params.id);
-
-  Article.findOne(conditions)
-          .populate('author')
-          .populate('category')
-          .exec((err, article) => {
-            //console.log(article.meta.favorites)
-            if (err) return next(err);
-            article.meta.favorites = article.meta.favorites ? article.meta.favorites+1 : 1;
-            article.markModified('meta');
-            article.save();
-            // 将参数传回前段页面
-            return res.jsonp({
-              'status':true,
-              'nowFavorites':article.meta.favorites
-            });
-        });
+ 
 });
 // collect喜欢-收藏
-router.post('/view/collect', (req, res, next) => {
+router.post('/delete/:id', (req, res, next) => {
   if(!req.body.id){
     return next(new Error('not find article ID'));
   }
   // id与slug兼容
   var conditions = compatibilitySlugID(req.body.id);
-
   Article.findOne(conditions)
           .exec((err, article) => {
             //console.log(article.meta.collect);
@@ -172,54 +114,6 @@ router.post('/view/collect', (req, res, next) => {
 
         });
 });
-
-// 评论
-router.post('/view/comment/:id', (req, res, next) => {
-  console.log(req.params.id);
-  if(!req.params.id){
-    return next(new Error('not find article ID'));
-  }
-  // id与slug兼容
-  var conditions = compatibilitySlugID(req.params.id);
-
-  var form = new formidable.IncomingForm();
-  form.parse(req, function (err, fiedls, files) {
-
-    if(err){
-      return console.log(err);
-    }
-    Article.findOne(conditions)
-          .exec((err, article) => {
-            //console.log(article.meta.favorites)
-            if (err) return next(err);
-            var comment = {
-              "username":fiedls.username,
-              "avatar":fiedls.avatar || 'default',
-              "commen_time":new Date(),
-              "content": fiedls.editortext,
-            }
-            article.comments.push(comment);
-            article.markModified('comments');
-            article.save(function (err, article) {
-              if(err) {
-                return console.log(err);
-              }
-              // console.log(article);
-              res.redirect('../'+ article._id);
-            });
-            return ;
-            // 将参数传回前段页面
-            // return res.render('view'){
-            //   title: 'Sky-Blog: '+ article.title,
-            //   article: article,
-            //   pretty:true
-            // });
-        });
-  });
-
-  
-});
-
 
 // 公用方法
 function compatibilitySlugID (idAndSlug) {

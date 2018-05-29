@@ -80,7 +80,7 @@ block contentLeft
                   $('#favorites-count').text(msg.nowFavorites);
                   //- console.log(msg);
                 }
-              });
+              })
             }
             function docollect(){
               var id = $('.articleID').text();
@@ -115,7 +115,6 @@ block contentLeft
               });
             }
           
-
         .bdsharebuttonbox
           a.bds_more(href='#', data-cmd='more') 分享到：
           a.bds_qzone(href='#', data-cmd='qzone', title='分享到QQ空间') QQ空间
@@ -148,18 +147,23 @@ block contentLeft
           with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)] 
 
         .article-comments
-          h3 用户评论
+          h3 用户评论 
           .article-comments-list
             if article.comments.length
               each comment in article.comments
                 .article-comments-item
-                  h4.article-comments-username=comment.username
-                  .article-comments-content!=markdown.toHTML(comment.content)
-                    
+                  span.article-userinfo
+                    img.img-circle.img-responsive(src='/img/userimages/' + comment.avatar +'.jpg')
+                    | &nbsp;&nbsp;
+                    =comment.username
+                    | &nbsp;&nbsp;&nbsp;&nbsp
+                    =moment(comment.commen_time).format('YYYY-MM-DD HH:mm:ss')
+                    | &nbsp;&nbsp
+                  //- h4.article-comments-username=comment.username
+                  .article-comments-content!=markdown.toHTML(comment.content)    
             else
-              p.alert.alert-info 该文章沙发还在，快来坐上沙发！
+              p.alert.alert-info 该文章沙发还在，想对作者说点什么的快来坐上沙发。
             
-
 
           h3 添加评论     
           form.article-comments-form.form-horizontal(action='./comment/'+ article.id, enctype="multipart/form-data", method='post')
@@ -178,7 +182,7 @@ block contentLeft
                 textarea#editortext.form-control(name='editortext',data-provide="markdown")
             |   
             .article-comments-form-button
-              button.btn.btn-default(type="submit") 提交评论
+              button.btn.btn-default(type="submit") 我来说一句
 
 
       //-.box(style='height:1000px;')
@@ -187,6 +191,22 @@ block contentLeft
 
 block contentRight
   .row
+    .panel.panel-default.box.sides-hz-1.jquery-shadow-sides.jquery-shadow-sides-hz-1
+      .panel-body(style='padding-top:0;')
+        h3.panel-title(style='border-bottom:1px solid rgba(0, 0, 0, 0.05);padding:8px 0;margin:0 0 5px;')
+          span.glyphicon.glyphicon-triangle-right.myglyphicon(aria-hidden="true", )
+          | 作者信息
+        .ulcontent
+          .ul.list-unstyled
+            li
+              a(href="#") Item 1
+            li
+              a(href="#") Item 2
+            li
+              a(href="#") Item 3
+            li
+              a(href="#") Item 4
+
     .panel.panel-default(style='border:0; box-shadow:3px 3px 15px -10px rgba(0, 0, 0, 0.9);')
       .panel-body(style='padding-top:0;')
         h3.panel-title(style='border-bottom:1px solid rgba(0, 0, 0, 0.05);padding:8px 0;margin:0 0 5px;')
@@ -218,7 +238,7 @@ block contentRight
 
 block scriptsAfter
   //script(type="text/javascript", src="/components/summernote/dist/summernote.js") 
-  script(type="text/javascript").
+  script(type="text/javascript"). 
     $(document).ready(function() {
       $("#editortext").markdown({autofocus:false,savable:false,language:'zh'})  
     })

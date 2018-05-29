@@ -73,7 +73,7 @@ body{
   margin-bottom: 20px;
 }
 .articleContent{
-  width: 98%;
+  width: 99%;
   margin: 0 auto;
   background-color: #FFFFFF;
   border:0.5px solid rgba(0, 0, 0, 0.02);
@@ -185,6 +185,18 @@ body{
 }
 .article-comments-form-button{
   margin: 1em 0;
+}
+.article-comments-list{
+
+}
+.article-comments-item{
+  padding: 0 0 0 10px;
+  border-bottom: 1px solid #EEE;
+  margin-bottom: 2px;
+}
+.article-comments-content{
+  padding-left:2em;
+  padding-top: 5px;
 }
 .pagination li{
   border: 0;

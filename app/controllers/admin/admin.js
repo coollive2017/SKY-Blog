@@ -8,6 +8,10 @@ module.exports = (app) => {
 };
 
 router.get('/', (req, res, next) => {
+  return res.redirect('/admin/articles')
+});
+
+router.get('/', (req, res, next) => {
   Article.find((err, articles) => {
     if (err) return next(err);
     res.render('admin/index', {
