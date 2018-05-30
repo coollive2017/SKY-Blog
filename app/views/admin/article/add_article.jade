@@ -1,0 +1,63 @@
+extends ../layout
+
+append css
+    link(rel="stylesheet", href='/components/editor.md/css/editormd.css')
+append beforjs
+    script(type="text/javascript", src='/components/editor.md/editormd.js')   
+
+block content
+  .content
+    .page-header
+      h3=category
+        | 添加文章
+    form#articleForm(action='', method='post', onsubmit="return false;")
+      .form-group 
+        label(for='articleTitle') 文章标题：
+        input#articleTitle.form-control(type='text', name='title', placeholder='请输入你的文章标题')
+      .form-group
+        label(for='articleContent') 文章正文： 
+        div#my-editormd
+          textarea#articleContent(style='display:none;', name='content') ###您的文章正文
+        script(type='text/javascript').
+          $(function() {
+            var editor = editormd("my-editormd", {
+              height:'750px',
+              path : "/components/editor.md/lib/" // Autoload modules mode
+            });
+          })
+      .form-group
+        label(for='articleCategory') 文章分类：
+        select#articleCategory.form-control(name="category")
+            option(value="") - 选择分类 -
+            each category in categories
+              option(value=category._id)= category.name
+
+      button.btn.btn-info(onclick='submitArticle()') 提交文章
+      script(type="text/javascript").
+        function submitArticle() {
+          var title = $('#articleTitle').val();
+          var content = $('#articleContent').val();
+          var category = $('#articleCategory option:selected').val();
+          $.ajax({
+            url:'/admin/articles/add',
+            type:'POST',
+            data:{
+              title:title,
+              content:content,
+              category:category
+            },
+            success:function (msg) {
+              Swal({
+                title: msg.text,
+                type: 'success',
+                confirmButtonText: "OK",
+              }).then(function(isConfirm){
+                if(isConfirm){
+                  $('#articleForm').reset();
+                }
+              });
+            }
+          })
+        }
+
+

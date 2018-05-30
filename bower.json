@@ -12,6 +12,7 @@
     "font-awesome": "^4.7.0",
     "swiper": "^3.4.2",
     "sweetalert2": "^7.20.6",
-    "simple-module": "^3.0.3"
+    "simple-module": "^3.0.3",
+    "editor.md":"^1.5.0"
   }
 }

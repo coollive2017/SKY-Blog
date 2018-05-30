@@ -33,9 +33,4 @@ $(document).ready(function () {
 		window.location.url = window.location.origin + window.location.pathname + queryString.stringify(query);
 
 	});
-
-	// // add page
-	// if (typeof CKEDITOR !== 'undefined') {
-	// 	CKEDITOR.replace('admin-post-content');
-	// }
 });

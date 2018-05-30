@@ -27,6 +27,7 @@
     "morgan": "^1.6.1",
     "serve-favicon": "^2.3.0",
     "slug": "^0.9.1",
+    "transliteration": "^1.6.2",
     "truncate": "^2.0.1"
   },
   "devDependencies": {
