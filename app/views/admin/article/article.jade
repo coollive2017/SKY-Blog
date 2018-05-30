@@ -4,98 +4,169 @@ append css
 
 block content
   .container
-      .ul.list-unstyled
-        .page-header
-          h2=category
-            | 文章列表
-          table.table.table-bordered
-            thead
-              tr
-                th(width='30%') 标题
-                th 分类 
-                th 作者 
-                th 发表时间 
-                th 被赞 
-                th 评论 
-                th 状态 
-                th 管理 
-            tbody
-              each article in articles 
-                tr
-                  td
-                    a(href='/article/view/'+article._id, target='_blank')
-                      =article.title
-                  td
-                    a(href='/category/'+article.category.name, target='_blank') 
-                      =article.category.name
-                  td=article.author.username  
-                  td=moment(article.created).format('YYYY-MM-DD HH:mm:ss') 
-                  td=article.meta.favorites || 0
-                  td=article.comments.length || 0 
-                  td=article.published ? '已发布':'待发布'
-                  td
-                    botton.btn.btn-primary 查看
-                    botton.btn.btn-success 编辑
-                    botton.btn.btn-danger 删除
+    .page-header
+      h2=category
+        | 文章列表
 
-      .paging(style='')
+    .content-filter
+      form.form-inline.form-filter
+        div.form-group
+          label 分类
+          select#filter-category.form-control(name="category")
+            option(value="", selected=(filter.category === "")) - 选择分类 -
+            each category in categories
+              option(value=category._id, selected=(category._id.toString() === filter.category))= category.name
+
+        div.form-group
+          label 作者
+          select#filter-author.form-control(name="author")
+            option(value="", selected=(filter.author === "")) - 选择作者 -
+            each author in authors
+              option(value=author._id, selected=(author._id.toString() === filter.author))= author.username
+
+        button#filter-submit.btn.btn-info 筛选
+        
+    table.table.table-bordered
+      thead
+        tr
+          th(width='30%')
+            if(sortby == 'title')
+              if(sortdir == 'desc')
+                a(href='./articles?page=' + pageNum + '&sortby=title&sortdir=asc&author='+filter.author+'&category='+filter.category)
+                  i.fa.fa-sort-alpha-desc 
+                  | &nbsp;标题
+              else
+                a(href='./articles?page=' + pageNum + '&sortby=title&sortdir=desc&author='+filter.author+'&category='+filter.category)
+                  i.fa.fa-sort-alpha-asc 
+                  | &nbsp;标题
+            else
+              a(href='./articles?page=' + pageNum + '&sortby=title&sortdir=desc&author='+filter.author+'&category='+filter.category)
+                  i.fa.fa-sort-alpha-desc 
+                  | &nbsp;标题
+          th 
+            if(sortby == 'category')
+              if(sortdir == 'desc')
+                a(href='./articles?page=' + pageNum + '&sortby=category&sortdir=asc&author='+filter.author+'&category='+filter.category)
+                  i.fa.fa-sort-alpha-desc 
+                  | &nbsp;分类
+              else
+                a(href='./articles?page=' + pageNum + '&sortby=category&sortdir=desc&author='+filter.author+'&category='+filter.category)
+                  i.fa.fa-sort-alpha-asc 
+                  | &nbsp;分类
+            else
+              a(href='./articles?page=' + pageNum + '&sortby=category&sortdir=desc&author='+filter.author+'&category='+filter.category)
+                  i.fa.fa-sort-alpha-desc 
+                  | &nbsp;分类
+          th 
+            if(sortby == 'author')
+              if(sortdir == 'desc')
+                a(href='./articles?page=' + pageNum + '&sortby=author&sortdir=asc&author='+filter.author+'&category='+filter.category)
+                  i.fa.fa-sort-alpha-desc 
+                  | &nbsp;作者
+              else
+                a(href='./articles?page=' + pageNum + '&sortby=author&sortdir=desc&author='+filter.author+'&category='+filter.category)
+                  i.fa.fa-sort-alpha-asc 
+                  | &nbsp;作者
+            else
+              a(href='./articles?page=' + pageNum + '&sortby=author&sortdir=desc&author='+filter.author+'&category='+filter.category)
+                  i.fa.fa-sort-alpha-desc 
+                  | &nbsp;作者
+          th 
+            if(sortby == 'published')
+              if(sortdir == 'desc')
+                a(href='./articles?page=' + pageNum + '&sortby=published&sortdir=asc&author='+filter.author+'&category='+filter.category)
+                  i.fa.fa-sort-amount-desc 
+                  | &nbsp;发表时间
+              else
+                a(href='./articles?page=' + pageNum + '&sortby=published&sortdir=desc&author='+filter.author+'&category='+filter.category)
+                  i.fa.fa-sort-amount-asc 
+                  | &nbsp;发表时间
+            else
+              a(href='./articles?page=' + pageNum + '&sortby=published&sortdir=desc&author='+filter.author+'&category='+filter.category)
+                  i.fa.fa-sort-amount-desc 
+                  | &nbsp;发表时间
+          th 被赞
+          th 评论
+          th 状态
+          th 管理
+      tbody
+        each article in articles
+          tr
+            td
+              a(href='/articles/view/' + article._id, target='_blank')
+                =article.title
+            td
+              a(href='/articles/category/' + article.category.name, target='_blank')
+                =article.category.name
+            td=article.author.username
+            td=moment(article.created).format('YYYY-MM-DD HH:mm:ss')
+            td=article.meta.favorites || 0
+            td=article.comments.length || 0
+            td=article.published ? '已发布' : '待发布'
+            td.td-botton
+              botton.btn.btn-primary(onclick="window.open('"+"/articles/view/"+article._id+"')") 查看
+              botton.btn.btn-success 编辑
+              botton.btn.btn-danger(onclick='deleteRow("' + article._id + '")') 删除
+              script(type="text/javascript").
+                function deleteRow(id) {
+                  $.ajax({
+                    url: '/admin/articles/delete/' + id,
+                    type: 'POST',
+                    data: {status: 'true'},
+                    success: (msg) => {
+                      console.log(msg.status);
+                      if(msg.status){
+                        Swal({
+                          title: msg.text,
+                          type: 'success',
+                          confirmButtonText: "好的",
+                        }).then(function(isConfirm){
+                          if(isConfirm){
+                            location.reload();
+                          }
+                        });
+                      }else{
+                        Swal({
+                          title: msg.text,
+                          type: 'error',
+                          confirmButtonText: "好的",
+                        }).then(function(isConfirm){
+                          if(isConfirm){
+                            location.reload();
+                          }
+                        });
+                      }
+                    },
+                  })
+                 } 
+
+    .paging(style='')
         nav(aria-label='Page navigation', style='text-align: center;margin:0 auto;"')
           ul.pagination
-            li
-              span
-                |文章总数：
-                =dataTotal
-            li
-              a(href='#', aria-label='Previous')
-                span(aria-hidden='true') « 上一页
+            // li
+            //   a(href='#', aria-label='Previous')
+            //     span(aria-hidden='true') « 上一页
             -var pagect = 1
             -var path
             while pagect <= pageCount
-              -path = './articles?page=' + pagect
+              -path = './articles?page=' + pagect + '&sortby='+sortby+'&sortdir='+sortdir+'&author='+filter.author+'&category='+filter.category
               if(pageNum == pagect)
                 li.active
                   a(href=path)= pagect++
               else
                 li
                   a(href=path)= pagect++
-            li
-              a(href='#', aria-label='Next')
-                span(aria-hidden='true') 下一页 »
+            // li
+            //   a(href='#', aria-label='Next')
+            //     span(aria-hidden='true') 下一页 »
             li
               span
-                |总页数：
-                =pageCount
+                |文章总数：
+                =dataTotal
 
-
-// block contentRight
-//   .row
-//     .panel.panel-default(style='border:0; box-shadow:3px 3px 15px -10px rgba(0, 0, 0, 0.9);')
-//       .panel-body(style='padding-top:0;')
-//         h3.panel-title(style='border-bottom:1px solid rgba(0, 0, 0, 0.05);padding:8px 0;margin:0 0 5px;')
-//           span.glyphicon.glyphicon-triangle-right.myglyphicon(aria-hidden="true", )
-//           | 文章分类
-//         .ulcontent
-//           .ul.list-unstyled
-//             each category in categories
-//               li
-//                 a(href="../category/"+category.name)
-//                   =category.name
-
-//     .panel.panel-default(style='border:0; box-shadow:3px 3px 15px -10px rgba(0, 0, 0, 0.9);')
-//       .panel-body(style='padding-top:0;')
-//         h3.panel-title(style='border-bottom:1px solid rgba(0, 0, 0, 0.05);padding:8px 0;margin:0 0 5px;')
-//           span.glyphicon.glyphicon-triangle-right.myglyphicon(aria-hidden="true", )
-//           | 友情链接
-//         .ulcontent
-//           .ul.list-unstyled
-//             li
-//               a(href="#") Item 1
-//             li
-//               a(href="#") Item 2
-//             li
-//               a(href="#") Item 3
-//             li
-//               a(href="#") Item 4
+block scriptsAfter
+  script(src='/js/querystring.js')
+  script(src='/js/admin/article.js')
 
 
 
