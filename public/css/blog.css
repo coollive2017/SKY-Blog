@@ -8,6 +8,11 @@
 .nofloat{
   clear:both
 }
+.to-top{
+  
+}
+
+/*content css */
 body{
   
 }
@@ -71,7 +76,7 @@ body{
 
 .articleContent{
   width: 99%;
-  margin: 0 auto;
+  margin: 0 auto 20px;
   background-color: #FFFFFF;
   border:0.5px solid rgba(0, 0, 0, 0.02);
   box-shadow:1px 0 15px -10px rgba(0, 0, 0, 0.9);

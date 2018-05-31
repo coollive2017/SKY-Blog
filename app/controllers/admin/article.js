@@ -87,7 +87,7 @@ router.get('/add', (req, res, next) => {
   //res.jsonp(req.params.id);
   return res.render('admin/article/add_article',{
     title: 'Sky-Blog-添加文章',
-    action:"'/admin/articles/add'",
+    action:"/admin/articles/add",
     article:{
       category:{id:''},
     }

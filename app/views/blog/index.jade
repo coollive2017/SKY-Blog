@@ -2,7 +2,16 @@ extends ./layout
 
 append css
 
+append beforjs
+  script(type="text/javascript", src='/js/jquery.toTop.js')
+
 block contentAll
+  a.to-top(style="cursor: pointer; position: fixed; right: 15px; bottom: 30px; display: inline;")
+    i.fa.fa-arrow-circle-o-up.fa-4x
+  script(type="text/javascript").
+    $(()=>{
+      $('.to-top').toTop();
+    })
   .container
     .jumbotron(style='margin:1em 0 1em;')
       .container
@@ -107,13 +116,13 @@ block contentRight
         .ulcontent
           .ul.list-unstyled
             li
-              a(href="#") Item 1
+              a(href="#") 南宁学院
             li
-              a(href="#") Item 2
+              a(href="#") 信息工程学院
             li
-              a(href="#") Item 3
+              a(href="#") 计算机科学与技术
             li
-              a(href="#") Item 4
+              a(href="#") 14计科2班
 
 
       //.list-group

@@ -1,7 +1,7 @@
 extends ./layout
 
 append css
-  //- link(rel='stylesheet', href='/components/toopay-bootstrap-markdown/css/bootstrap-markdown.min.css')
+  link(rel='stylesheet', href='/components/toopay-bootstrap-markdown/css/bootstrap-markdown.min.css')
   link(rel='stylesheet', href='/components/editor.md/css/editormd.min.css')
 append beforjs
 
@@ -15,11 +15,16 @@ append beforjs
   script(src='/components/editor.md/lib/jquery.flowchart.min.js')
   script(src='/components/toopay-bootstrap-markdown/js/bootstrap-markdown.js')
   script(src='/components/toopay-bootstrap-markdown/locale/bootstrap-markdown.zh.js')
-
-  
-
+  script(type="text/javascript", src='/js/jquery.toTop.js')
 
 block contentAll
+  a.to-top(style="cursor: pointer; position: fixed; right: 15px; bottom: 30px; display: inline;")
+    i.fa.fa-arrow-circle-o-up.fa-4x
+  script(type="text/javascript").
+    $(()=>{
+      $('.to-top').toTop();
+    })
+
   .container
     ol.breadcrumb(style='margin:1em 0 1em;')
       span.glyphicon.glyphicon-home.myglyphicon
@@ -240,13 +245,13 @@ block contentRight
         .ulcontent
           .ul.list-unstyled
             li
-              a(href="#") Item 1
+              a(href="#") 南宁学院
             li
-              a(href="#") Item 2
+              a(href="#") 信息工程学院
             li
-              a(href="#") Item 3
+              a(href="#") 计算机科学与技术
             li
-              a(href="#") Item 4
+              a(href="#") 14计科2班
 
 block scriptsAfter
   //script(type="text/javascript", src="/components/summernote/dist/summernote.js") 
