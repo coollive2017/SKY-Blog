@@ -53,7 +53,7 @@ block content
                 confirmButtonText: "OK",
               }).then(function(isConfirm){
                 if(isConfirm){
-                  $('#articleForm').reset();
+                  $('#articleForm')[0].reset();
                 }
               });
             }

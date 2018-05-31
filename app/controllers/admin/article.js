@@ -95,11 +95,10 @@ router.post('/add', (req, res, next) => {
   var reg = /^[A-Za-z0-9]+$/
   var slug;
   if(!reg.test(title)){
-    slug = transliteration.transliterate(title);
+    slug = transliteration.transliterate(title).replace(/\s+/g,'');
   }else{
     slug = title;
   }
-  console.log(slug);
   User.findOne({}).exec((err, user)=>{
     console.log(user);
     var article = new Article({

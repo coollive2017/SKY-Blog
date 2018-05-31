@@ -13,14 +13,17 @@ module.exports = (app) => {
 // 首页文章
 router.get('/', (req, res, next) => {
   Article.find({'published' : true})
-          .sort('created')
+          .sort({'created':'desc'})
           .populate('author')
           .populate('category')
           .exec((err, articles) => {
             articles = articles.slice(0, 50);
             if (err) return next(err);
             //return res.jsonp(articles);
-
+            articles.forEach((article) => {
+              article.content = clearHtmlTag(markdown.toHTML(article.content.substring(0, 300)));
+              console.log(article.content);
+            });
             //simple page
             //单页数据条数，总共页数，数据总条数，
             var pageNum = Math.abs(parseInt(req.query.page || 1, 10));
@@ -230,6 +233,10 @@ function compatibilitySlugID (idAndSlug) {
     conditions.slug = idAndSlug;
   }
   return conditions;
+}
+function clearHtmlTag(str) {
+  //去掉所有的html标记
+  return str.replace(/<[^>]+>/g,"");
 }
 
 
