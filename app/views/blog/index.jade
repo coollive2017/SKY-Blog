@@ -74,19 +74,27 @@ block contentLeft
               span
                 |文章总数：
                 =dataTotal
-            li
-              a(href='#', aria-label='Previous')
+            if(pageNum > 1)
+              -var prepage = pageNum-1
+            else
+              -var prepage = pageNum
+            li   
+              a(href='/articles?page=' + prepage +'&keyword='+filter.keyword, aria-label='Previous')
                 span(aria-hidden='true') « 上一页
             -var pagect = 1
             while pagect <= pageCount
               if(pageNum == pagect)
                 li.active
-                  a(href='/articles?page=' + pagect)= pagect++
+                  a(href='/articles?page=' + pagect +'&keyword='+filter.keyword)= pagect++
               else
                 li
-                  a(href='/articles?page=' + pagect)= pagect++
+                  a(href='/articles?page=' + pagect +'&keyword='+filter.keyword)= pagect++
+            if(pageNum < pageCount)
+              -var aftpage = pageNum+1
+            else
+              -var aftpage = pageNum
             li
-              a(href='#', aria-label='Next')
+              a(href='/articles?page=' + aftpage +'&keyword='+filter.keyword, aria-label='Next')
                 span(aria-hidden='true') 下一页 »
             li
               span

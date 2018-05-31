@@ -27,9 +27,15 @@ block main
             li
               form.navbar-form.navbar-left(role="search", style='')
                 .input-group
-                  input.form-control(type="text", placeholder="搜博主文章名...")
+                  input.form-control.searcKkeyword(type="text", placeholder="搜文章名、相关内容...", value=filter.keyword)
                   span.input-group-btn
-                    button.btn.btn-default(type="submit") Search
+                    button.btn.btn-default(type="button" onclick='submitKeyword()')
+                      i.fa.fa-search
+                    script(type="text/javascript").
+                      function submitKeyword(){
+                        var keyword = $('.searcKkeyword').val();
+                        window.location.replace('/articles?keyword='+keyword);
+                      }    
           ul.nav.navbar-nav.navbar-right
             //登录注册
             li

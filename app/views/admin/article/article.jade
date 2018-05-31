@@ -10,19 +10,22 @@ block content
 
     .content-filter
       form.form-inline.form-filter
-        div.form-group
+        .form-group
           label 分类
           select#filter-category.form-control(name="category")
             option(value="", selected=(filter.category === "")) - 选择分类 -
             each category in categories
               option(value=category._id, selected=(category._id.toString() === filter.category))= category.name
 
-        div.form-group
+        .form-group
           label 作者
           select#filter-author.form-control(name="author")
             option(value="", selected=(filter.author === "")) - 选择作者 -
             each author in authors
               option(value=author._id, selected=(author._id.toString() === filter.author))= author.username
+        .form-group
+          label 关键词
+          input#filter-keyword.form-control(name="keyword", type="text", value=filter.keyword)      
 
         button#filter-submit.btn.btn-info 筛选
         
@@ -32,57 +35,57 @@ block content
           th(width='30%')
             if(sortby == 'title')
               if(sortdir == 'desc')
-                a(href='./articles?page=' + pageNum + '&sortby=title&sortdir=asc&author='+filter.author+'&category='+filter.category)
+                a(href='./articles?page=' + pageNum + '&sortby=title&sortdir=asc&author='+filter.author+'&category='+filter.category+'&keyword='+keyword)
                   i.fa.fa-sort-alpha-desc 
                   | &nbsp;标题
               else
-                a(href='./articles?page=' + pageNum + '&sortby=title&sortdir=desc&author='+filter.author+'&category='+filter.category)
+                a(href='./articles?page=' + pageNum + '&sortby=title&sortdir=desc&author='+filter.author+'&category='+filter.category+'&keyword='+filter.keyword)
                   i.fa.fa-sort-alpha-asc 
                   | &nbsp;标题
             else
-              a(href='./articles?page=' + pageNum + '&sortby=title&sortdir=desc&author='+filter.author+'&category='+filter.category)
+              a(href='./articles?page=' + pageNum + '&sortby=title&sortdir=desc&author='+filter.author+'&category='+filter.category+'&keyword='+filter.keyword)
                   i.fa.fa-sort-alpha-desc 
                   | &nbsp;标题
           th 
             if(sortby == 'category')
               if(sortdir == 'desc')
-                a(href='./articles?page=' + pageNum + '&sortby=category&sortdir=asc&author='+filter.author+'&category='+filter.category)
+                a(href='./articles?page=' + pageNum + '&sortby=category&sortdir=asc&author='+filter.author+'&category='+filter.category+'&keyword='+filter.keyword)
                   i.fa.fa-sort-alpha-desc 
                   | &nbsp;分类
               else
-                a(href='./articles?page=' + pageNum + '&sortby=category&sortdir=desc&author='+filter.author+'&category='+filter.category)
+                a(href='./articles?page=' + pageNum + '&sortby=category&sortdir=desc&author='+filter.author+'&category='+filter.category+'&keyword='+filter.keyword)
                   i.fa.fa-sort-alpha-asc 
                   | &nbsp;分类
             else
-              a(href='./articles?page=' + pageNum + '&sortby=category&sortdir=desc&author='+filter.author+'&category='+filter.category)
+              a(href='./articles?page=' + pageNum + '&sortby=category&sortdir=desc&author='+filter.author+'&category='+filter.category+'&keyword='+filter.keyword)
                   i.fa.fa-sort-alpha-desc 
                   | &nbsp;分类
           th 
             if(sortby == 'author')
               if(sortdir == 'desc')
-                a(href='./articles?page=' + pageNum + '&sortby=author&sortdir=asc&author='+filter.author+'&category='+filter.category)
+                a(href='./articles?page=' + pageNum + '&sortby=author&sortdir=asc&author='+filter.author+'&category='+filter.category+'&keyword='+filter.keyword)
                   i.fa.fa-sort-alpha-desc 
                   | &nbsp;作者
               else
-                a(href='./articles?page=' + pageNum + '&sortby=author&sortdir=desc&author='+filter.author+'&category='+filter.category)
+                a(href='./articles?page=' + pageNum + '&sortby=author&sortdir=desc&author='+filter.author+'&category='+filter.category+'&keyword='+filter.keyword)
                   i.fa.fa-sort-alpha-asc 
                   | &nbsp;作者
             else
-              a(href='./articles?page=' + pageNum + '&sortby=author&sortdir=desc&author='+filter.author+'&category='+filter.category)
+              a(href='./articles?page=' + pageNum + '&sortby=author&sortdir=desc&author='+filter.author+'&category='+filter.category+'&keyword='+filter.keyword)
                   i.fa.fa-sort-alpha-desc 
                   | &nbsp;作者
           th 
             if(sortby == 'published')
               if(sortdir == 'desc')
-                a(href='./articles?page=' + pageNum + '&sortby=published&sortdir=asc&author='+filter.author+'&category='+filter.category)
+                a(href='./articles?page=' + pageNum + '&sortby=published&sortdir=asc&author='+filter.author+'&category='+filter.category+'&keyword='+filter.keyword)
                   i.fa.fa-sort-amount-desc 
                   | &nbsp;发表时间
               else
-                a(href='./articles?page=' + pageNum + '&sortby=published&sortdir=desc&author='+filter.author+'&category='+filter.category)
+                a(href='./articles?page=' + pageNum + '&sortby=published&sortdir=desc&author='+filter.author+'&category='+filter.category+'&keyword='+filter.keyword)
                   i.fa.fa-sort-amount-asc 
                   | &nbsp;发表时间
             else
-              a(href='./articles?page=' + pageNum + '&sortby=published&sortdir=desc&author='+filter.author+'&category='+filter.category)
+              a(href='./articles?page=' + pageNum + '&sortby=published&sortdir=desc&author='+filter.author+'&category='+filter.category+'&keyword='+filter.keyword)
                   i.fa.fa-sort-amount-desc 
                   | &nbsp;发表时间
           th 被赞
@@ -162,7 +165,7 @@ block content
             -var pagect = 1
             -var path
             while pagect <= pageCount
-              -path = './articles?page=' + pagect + '&sortby='+sortby+'&sortdir='+sortdir+'&author='+filter.author+'&category='+filter.category
+              -path = './articles?page=' + pagect + '&sortby='+sortby+'&sortdir='+sortdir+'&author='+filter.author+'&category='+filter.category+'&keyword='+filter.keyword
               if(pageNum == pagect)
                 li.active
                   a(href=path)= pagect++

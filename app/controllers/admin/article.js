@@ -38,6 +38,10 @@ router.get('/', (req, res, next) => {
   }
   if(req.query.author){
     conditions.author = req.query.author.trim();
+  } 
+  if(req.query.keyword){
+    conditions.title = new RegExp(req.query.keyword.trim(),'i');
+    conditions.content = new RegExp(req.query.keyword.trim(),'i');
   }
   // 操作数据库 
   User.find({}).exec((err, authors) => {
@@ -75,6 +79,7 @@ router.get('/', (req, res, next) => {
                 filter:{
                   category:req.query.category || '',
                   author:req.query.author || '',
+                  keyword:req.query.keyword || '',
                 },  
                 pretty:true
               });

@@ -17,7 +17,14 @@ module.exports = (app) => {
 };
 // 首页文章
 router.get('/', (req, res, next) => {
-  Article.find({'published' : true})
+
+  var conditions = {};
+  if(req.query.keyword){
+    conditions.title = new RegExp(req.query.keyword.trim(),'i');
+    conditions.content = new RegExp(req.query.keyword.trim(),'i');
+    conditions.published = true;
+  }
+  Article.find(conditions)
           .sort({'created':'desc'})
           .populate('author')
           .populate('category')
@@ -48,6 +55,9 @@ router.get('/', (req, res, next) => {
               pageSize:pageSize,
               pageCount:pageCount,
               dataTotal:dataTotal,
+              filter:{
+                keyword:req.query.keyword || '',
+              },
               pretty:true
             });
         });
