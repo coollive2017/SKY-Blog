@@ -106,7 +106,6 @@ router.post('/add', (req, res, next) => {
     slug = title;
   }
   User.findOne({}).exec((err, user)=>{
-    console.log(user);
     var article = new Article({
       title:title,
       slug:slug,
@@ -127,7 +126,6 @@ router.post('/add', (req, res, next) => {
     // 保存数据
     article.save((err, result) => {
       if(err){
-        console.log(err);
         return next(err);
       }
       return res.jsonp({
@@ -185,7 +183,6 @@ router.post('/edit/:id', (req, res, next) => {
     // 保存数据
     article.save((err, result) => {
       if(err){
-        console.log(err);
         return next(err);
       }
       return res.jsonp({
@@ -209,12 +206,12 @@ router.post('/delete/:id', (req, res, next) => {
     if(rowsRemove){
       return res.jsonp({
         status:true,
-        text:'文章删除成功'
+        text:'文章删除成功！'
       });
     }else{
       return res.jsonp({
         status:false,
-        text:'文章删除成功'    
+        text:'文章删除失败！'    
       });
     }
   })

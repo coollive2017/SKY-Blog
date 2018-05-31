@@ -9,7 +9,7 @@ block content
   .content
     .page-header
       h3=category
-        =article.slug ? "修改文章" : "添加文章"
+        =article.created ? "修改文章" : "添加文章"
     form#articleForm(action='', method='post', onsubmit="return false;")
       .form-group 
         label(for='articleTitle') 文章标题：
@@ -33,7 +33,7 @@ block content
               option(value=category._id, selected=(category.id.toString() == article.category.id.toString()))= category.name
 
       button.btn.btn-info(onclick='submitArticle()')
-        = article.slug ? "修改文章" : "发布文章" 
+        = article.created ? "修改文章" : "发布文章" 
 
       script(type="text/javascript").
         function submitArticle() {

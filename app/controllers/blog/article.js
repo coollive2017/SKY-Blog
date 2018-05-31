@@ -27,7 +27,7 @@ router.get('/', (req, res, next) => {
             //return res.jsonp(articles);
             articles.forEach((article) => {
               article.content = clearHtmlTag(markdown.toHTML(article.content.substring(0, 300)));
-              console.log(article.content);
+              // console.log(article.content);
             });
             //simple page
             //单页数据条数，总共页数，数据总条数，
@@ -55,7 +55,7 @@ router.get('/', (req, res, next) => {
 // 分类文章查看
 router.get('/category/:name', (req, res, next) => {
   Category.findOne({ name : req.params.name}).exec((err, category) => {
-    console.log(category.name)
+    //console.log(category.name)
     Article.find({'published' : true, 'category' : category})
           .sort('created')
           .populate('author')

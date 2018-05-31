@@ -1,0 +1,104 @@
+extends ../layout
+
+append css
+
+block content
+  .content
+    .page-header
+      h2=category
+        | 文章列表
+        
+    table.table.table-bordered
+      thead
+        tr
+          th 分类名
+          th 别名
+          th 创建时间
+          th 管理
+      tbody
+        each category in categories
+          tr
+            td=category.name
+            td=category.slug
+            td=moment(category.created).format('YYYY-MM-DD HH:mm:ss')
+            td.td-botton
+              botton.btn.btn-success(onclick="window.location.replace('"+"/admin/categories/edit/"+category._id+"')") 编辑
+              botton.btn.btn-danger(onclick='deleteRow("' + category._id + '")') 删除
+              script(type="text/javascript").
+                function deleteRow(id) {
+                  Swal({
+                    title: "确定删除该类？",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: '确认删除',
+                    cancelButtonText: '考虑一下',
+                  }).then(function(isConfirm){
+                    console.log(isConfirm);
+                    if(isConfirm.value == true){
+                      $.ajax({
+                        url: '/admin/categories/delete/' + id,
+                        type: 'POST',
+                        data: {status: 'true'},
+                        success: (msg) => {
+                          console.log(msg.status);
+                          if(msg.status){
+                            Swal({
+                              title: msg.text,
+                              type: 'success',
+                              confirmButtonText: "好的",
+                            }).then(function(isConfirm){
+                              if(isConfirm){
+                                location.reload();
+                              }
+                            });
+                          }else{
+                            Swal({
+                              title: msg.text,
+                              type: 'error',
+                              confirmButtonText: "好的",
+                            }).then(function(isConfirm){
+                              if(isConfirm){
+                                location.reload();
+                              }
+                            });
+                          }
+                        },
+                      })
+                    }else{
+                      console.log('false');
+                    }
+                  });
+                 } 
+
+    .paging(style='')
+        nav(aria-label='Page navigation', style='text-align: center;margin:0 auto;"')
+          ul.pagination
+            li
+              a(href='#', aria-label='Previous')
+                span(aria-hidden='true') « 上一页
+            -var pagect = 1
+            -var path
+            while pagect <= pageCount
+              -path = './categories?page=' + pagect
+              if(pageNum == pagect)
+                li.active
+                  a(href=path)= pagect++
+              else
+                li
+                  a(href=path)= pagect++
+            li
+              a(href='#', aria-label='Next')
+                span(aria-hidden='true') 下一页 »
+            li
+              span
+                |分类总数：
+                =dataTotal
+
+block scriptsAfter
+
+
+
+
+
+
+

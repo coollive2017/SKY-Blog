@@ -1,0 +1,42 @@
+extends ../layout
+
+append css
+append beforjs
+
+block content 
+  .content
+    .page-header
+      h3=category.created ? "修改分类" : "添加分类"
+    form#articleForm(action='', method='post', onsubmit="return false;")
+      .form-group 
+        label(for='categoryname') 分类名：
+        input#categoryname.form-control(type='text', name='categoryname', required='true', placeholder='请输入分类名！', value=category.name)
+
+      button.btn.btn-info(onclick='submitCategory()')
+        = category.created ? "修改分类" : "添加分类" 
+
+      script(type="text/javascript").
+        function submitCategory() {
+          var categoryname = $('#categoryname').val();
+          if(categoryname == ''){
+            return;
+          }
+          $.ajax({
+            url:"#{action}",
+            type:'POST',
+            data:{
+              categoryname:categoryname
+            },
+            success:function (msg) {
+              Swal({
+                title: msg.text,
+                type: 'success',
+                confirmButtonText: "OK",
+              }).then(function(isConfirm){
+                if(isConfirm){
+                  window.location.href='/admin/categories';
+                }
+              });
+            }
+          });
+        }

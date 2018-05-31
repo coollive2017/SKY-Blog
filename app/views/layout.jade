@@ -6,13 +6,14 @@ html(lang='en')
     meta(name='viewport', content='width=device-width, initial-scale=1')
     link(rel="shortcut icon", href="/img/favicon.ico", type="image/x-icon")
     title= title
-    block beforjs
-      script(src='/components/jquery/dist/jquery.js')
+    script(src='/components/jquery/dist/jquery.js')
     block css
       link(rel='stylesheet', href='/components/bootstrap/dist/css/bootstrap.css')
       link(rel='stylesheet', href='/components/font-awesome/css/font-awesome.css')
 
   body(style='background-color:#EEEEEE;')
+    block beforjs
+    
     .maincontent
       block main
 
