@@ -68,10 +68,7 @@ body{
 .jumbox:hover:after{
   transform: translateY(0);
 } */
-.contentLeft{
-  margin: 0 auto;
-  margin-bottom: 20px;
-}
+
 .articleContent{
   width: 99%;
   margin: 0 auto;
@@ -94,9 +91,9 @@ body{
 /*contentList列表的CSS样式*/
 .contentList{
   padding: 0 15px 1em;
-  margin: 0 auto;
+  margin: 0 auto 20px;
 }
-.contentList li{
+.contentList > .list-unstyled li{
   padding:10px 5px 5px;
   border-bottom: 1px solid #DDDDDD;
   margin-bottom: 5px;
@@ -136,7 +133,7 @@ body{
   text-align: center;
 }
 .article-text{
-  text-indent: 2em;
+  /* text-indent: 2em; */
   text-align: justify;
   margin: 20px 1em 0;
 }
@@ -202,6 +199,12 @@ body{
   border: 0;
   padding: 0;
   margin: 0;
+}
+
+.add-content{
+  width: 90%;
+  margin: 10px auto;
+  padding: 10px;
 }
 
 

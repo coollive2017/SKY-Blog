@@ -3,10 +3,11 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const markdown = require('markdown').markdown;
 const formidable = require('formidable');
-const Article = mongoose.model('Article');
-const Category = mongoose.model('Category');
 const transliteration = require('transliteration');
 const slug = require('slug');
+// models
+const Article = mongoose.model('Article');
+const Category = mongoose.model('Category');
 const User = mongoose.model('User');
 
 

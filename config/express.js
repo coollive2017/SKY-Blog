@@ -11,6 +11,7 @@ const compress = require('compression');
 const methodOverride = require('method-override');
 const mongoose = require('mongoose');
 const markdown = require('markdown').markdown;
+const { check, validationResult } = require('express-validator/check');
 const Category = mongoose.model('Category');
 
 module.exports = (app, config) => {

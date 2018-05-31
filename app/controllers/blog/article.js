@@ -3,8 +3,13 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const markdown = require('markdown').markdown;
 const formidable = require('formidable');
+const transliteration = require('transliteration');
+const slug = require('slug');
+// models
 const Article = mongoose.model('Article');
 const Category = mongoose.model('Category');
+const User = mongoose.model('User');
+
 
 
 module.exports = (app) => {
@@ -218,11 +223,58 @@ router.post('/view/comment/:id', (req, res, next) => {
             //   pretty:true
             // });
         });
-  });
-
-  
+  }); 
 });
 
+// 添加文章
+router.get('/add', (req, res, next) => {
+  res.render('blog/add_article');
+});
+router.post('/add', (req, res, next) => {
+  //res.jsonp(req.params.id);
+  var title = req.body.title.trim();
+  var category = req.body.category.trim();
+  var content  = req.body.content;
+  var reg = /^[A-Za-z0-9]+$/
+  var slug;
+  if(!reg.test(title)){
+    slug = transliteration.transliterate(title).replace(/\s+/g,'');
+  }else{
+    slug = title;
+  }
+  User.findOne({}).exec((err, user)=>{
+    console.log(user);
+    var article = new Article({
+      title:title,
+      slug:slug,
+      content:content,
+      category: category,
+      author: user,
+      published: true,
+      meta: {
+        'favorites':0,
+        'collect':{
+          'count':0,
+          'user':[]  
+        }  
+      },
+      comments: [],
+      created: new Date(),
+    });
+    // 保存数据
+    article.save((err, result) => {
+      if(err){
+        console.log(err);
+        return next(err);
+      }
+      return res.jsonp({
+        status:true,
+        text:'文章提交成功，并保存成功！'
+      });
+      //console.log('saved article:' + article.slug);
+    });
+  });
+});
 
 // 公用方法
 function compatibilitySlugID (idAndSlug) {
