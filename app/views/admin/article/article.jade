@@ -105,39 +105,52 @@ block content
             td=article.published ? '已发布' : '待发布'
             td.td-botton
               botton.btn.btn-primary(onclick="window.open('"+"/articles/view/"+article._id+"')") 查看
-              botton.btn.btn-success 编辑
+              botton.btn.btn-success(onclick="window.open('"+"/admin/articles/edit/"+article._id+"')") 编辑
               botton.btn.btn-danger(onclick='deleteRow("' + article._id + '")') 删除
               script(type="text/javascript").
                 function deleteRow(id) {
-                  $.ajax({
-                    url: '/admin/articles/delete/' + id,
-                    type: 'POST',
-                    data: {status: 'true'},
-                    success: (msg) => {
-                      console.log(msg.status);
-                      if(msg.status){
-                        Swal({
-                          title: msg.text,
-                          type: 'success',
-                          confirmButtonText: "好的",
-                        }).then(function(isConfirm){
-                          if(isConfirm){
-                            location.reload();
+                  Swal({
+                    title: "确定删除该文章？",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: '确认删除',
+                    cancelButtonText: '考虑一下',
+                  }).then(function(isConfirm){
+                    console.log(isConfirm);
+                    if(isConfirm.value == true){
+                      $.ajax({
+                        url: '/admin/articles/delete/' + id,
+                        type: 'POST',
+                        data: {status: 'true'},
+                        success: (msg) => {
+                          console.log(msg.status);
+                          if(msg.status){
+                            Swal({
+                              title: msg.text,
+                              type: 'success',
+                              confirmButtonText: "好的",
+                            }).then(function(isConfirm){
+                              if(isConfirm){
+                                location.reload();
+                              }
+                            });
+                          }else{
+                            Swal({
+                              title: msg.text,
+                              type: 'error',
+                              confirmButtonText: "好的",
+                            }).then(function(isConfirm){
+                              if(isConfirm){
+                                location.reload();
+                              }
+                            });
                           }
-                        });
-                      }else{
-                        Swal({
-                          title: msg.text,
-                          type: 'error',
-                          confirmButtonText: "好的",
-                        }).then(function(isConfirm){
-                          if(isConfirm){
-                            location.reload();
-                          }
-                        });
-                      }
-                    },
-                  })
+                        },
+                      })
+                    }else{
+                      console.log('false');
+                    }
+                  });
                  } 
 
     .paging(style='')

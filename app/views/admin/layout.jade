@@ -55,7 +55,7 @@ block main
       .row
         .col-sm-3.col-md-2.sidebar
           ul.nav.nav-sidebar
-            li.active
+            li
               a(href='/admin/articles')
                 | 文章列表
                 span.sr-only (current)
@@ -65,6 +65,16 @@ block main
               a(href='/admin/categories/list') 文章分类
             li
               a(href='/admin/categories/add') 添加分类
+            script(type="text/javascript").
+              $(()=>{
+                $('.nav-sidebar').find('a').each(function (){
+                  $(this).parent().removeClass('active');
+                  if (this.href === document.location.href ){
+                      $(this).parent().addClass('active');
+                  }
+                });
+              })  
+           
           ul.nav.nav-sidebar
             li
               a(href='/admin/users/personInfo') 个人信息

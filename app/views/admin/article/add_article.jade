@@ -5,19 +5,19 @@ append css
 append beforjs
     script(type="text/javascript", src='/components/editor.md/editormd.js')   
 
-block content
+block content 
   .content
     .page-header
       h3=category
-        | 添加文章
+        =article.slug ? "修改文章" : "添加文章"
     form#articleForm(action='', method='post', onsubmit="return false;")
       .form-group 
         label(for='articleTitle') 文章标题：
-        input#articleTitle.form-control(type='text', name='title', required='true', placeholder='请输入你的文章标题')
+        input#articleTitle.form-control(type='text', name='title', required='true', placeholder='请输入你的文章标题', value=article.title)
       .form-group
         label(for='articleContent') 文章正文： 
         div#my-editormd
-          textarea#articleContent(style='display:none;', required='true', name='content') ###您的文章正文
+          textarea#articleContent(style='display:none;', required='true', name='content')= article.content
         script(type='text/javascript').
           $(function() {
             var editor = editormd("my-editormd", {
@@ -30,9 +30,11 @@ block content
         select#articleCategory.form-control(name="category", required='true')
             option(value="") - 选择分类 -
             each category in categories
-              option(value=category._id)= category.name
+              option(value=category._id, selected=(category.id.toString() == article.category.id.toString()))= category.name
 
-      button.btn.btn-info(onclick='submitArticle()') 提交文章
+      button.btn.btn-info(onclick='submitArticle()')
+        = article.slug ? "修改文章" : "发布文章" 
+
       script(type="text/javascript").
         function submitArticle() {
           var title = $('#articleTitle').val();
@@ -42,7 +44,7 @@ block content
             return;
           }
           $.ajax({
-            url:'/admin/articles/add',
+            url:"#{action}",
             type:'POST',
             data:{
               title:title,
@@ -56,11 +58,11 @@ block content
                 confirmButtonText: "OK",
               }).then(function(isConfirm){
                 if(isConfirm){
-                  $('#articleForm')[0].reset();
+                  window.location.href='/admin';
                 }
               });
             }
-          })
+          });
         }
 
 

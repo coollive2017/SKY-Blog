@@ -80,13 +80,18 @@ router.get('/', (req, res, next) => {
               });
           });
   });
-
 });
 
 // 文章添加
 router.get('/add', (req, res, next) => {
   //res.jsonp(req.params.id);
-  return res.render('admin/article/add_article');
+  return res.render('admin/article/add_article',{
+    title: 'Sky-Blog-添加文章',
+    action:"'/admin/articles/add'",
+    article:{
+      category:{id:''},
+    }
+  });
 });
 router.post('/add', (req, res, next) => {
   //res.jsonp(req.params.id);
@@ -137,11 +142,58 @@ router.post('/add', (req, res, next) => {
 // 编辑
 router.get('/edit/:id', (req, res, next) => {
   //res.jsonp(req.params.id);
- 
+  if(!req.params.id){
+    return next(new Error('not find article ID'));
+  }
+
+  Article.findOne({'_id':req.params.id})
+          .populate('author')
+          .populate('category')
+          .exec((err, article) => {
+            if (err) return next(err);
+
+            // 将参数传回前段页面
+            return res.render('admin/article/add_article', {
+              title: 'Sky-Blog: '+ article.title,
+              action:'/admin/articles/edit/'+req.params.id,
+              article: article,
+              pretty:true
+            });
+        });
 });
 router.post('/edit/:id', (req, res, next) => {
   //res.jsonp(req.params.id);
- 
+  if(!req.params.id){
+    return next(new Error('not find article ID'));
+  }
+  var title = req.body.title.trim();
+  var category = req.body.category.trim();
+  var content  = req.body.content;
+  var reg = /^[A-Za-z0-9]+$/
+  var slug;
+  if(!reg.test(title)){
+    slug = transliteration.transliterate(title).replace(/\s+/g,'');
+  }else{
+    slug = title;
+  }
+  Article.findOne({'_id':req.params.id}).exec((err, article) => {
+    if (err) return next(err);
+    article.title = title;
+    article.slug = slug;
+    article.category = category;
+    article.content = content;
+    // 保存数据
+    article.save((err, result) => {
+      if(err){
+        console.log(err);
+        return next(err);
+      }
+      return res.jsonp({
+        status:true,
+        text:'文章修改成功！'
+      });
+    });
+  });
 });
 
 // 删除
