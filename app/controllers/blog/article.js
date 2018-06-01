@@ -258,38 +258,41 @@ router.post('/add', (req, res, next) => {
   }else{
     slug = title;
   }
-  User.findOne({}).exec((err, user)=>{
-    console.log(user);
-    var article = new Article({
-      title:title,
-      slug:slug,
-      content:content,
-      category: category,
-      author: user,
-      published: true,
-      meta: {
-        'favorites':0,
-        'collect':{
-          'count':0,
-          'user':[]  
-        }  
-      },
-      comments: [],
-      created: new Date(),
-    });
-    // 保存数据
-    article.save((err, result) => {
-      if(err){
-        console.log(err);
-        return next(err);
-      }
-      return res.jsonp({
-        status:true,
-        text:'文章提交成功，并保存成功！'
+  if(req.session.passport && req.session.passport.user){
+    User.findOne({_id:req.session.passport.user}).exec((err, user)=>{
+      var article = new Article({
+        title:title,
+        slug:slug,
+        content:content,
+        category: category,
+        author: user,
+        published: true,
+        meta: {
+          'favorites':0,
+          'collect':{
+            'count':0,
+            'user':[]  
+          }  
+        },
+        comments: [],
+        created: new Date(),
       });
-      //console.log('saved article:' + article.slug);
+      // 保存数据
+      article.save((err, result) => {
+        if(err){
+          console.log(err);
+          return next(err);
+        }
+        return res.jsonp({
+          status:true,
+          text:'文章提交成功，并保存成功！'
+        });
+        //console.log('saved article:' + article.slug);
+      });
     });
-  });
+  }else{
+    return next(new Error('不正确的登录状态'));
+  }
 });
 
 // 公用方法
