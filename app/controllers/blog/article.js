@@ -94,6 +94,9 @@ router.get('/category/:name', (req, res, next) => {
               pageCount:pageCount,
               dataTotal:dataTotal,
               category:category.name,
+              // filter:{
+              //   keyword:req.query.keyword || '',
+              // },
               pretty:true
             });
         });
@@ -118,6 +121,9 @@ router.get('/view/:id', (req, res, next) => {
             return res.render('blog/view', {
               title: 'Sky-Blog: '+ article.title,
               article: article,
+              // filter:{
+              //   keyword:req.query.keyword || '',
+              // },
               pretty:true
             });
         });
