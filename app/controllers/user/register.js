@@ -8,19 +8,15 @@ const User = mongoose.model('User');
 
 
 module.exports = (app) => {
-	app.use('/user/login', router);
+	app.use('/user/register', router);
 };
 // Login
 router.get('/', (req, res, next) => {
-	return res.render('user/login',{
+	return res.render('user/register',{
 		title: 'Login',
         pretty:true
 	});
 });
 router.post('/', (req, res, next) => {
 
-});
-// Login-out
-router.get('/', (req, res, next) => {
-	res.redirect('/')
 });

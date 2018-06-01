@@ -41,7 +41,7 @@
   }
   
   function getRandomImg() {
-    return 'https://picsum.photos/300/150/?image=' + getRandomNumberByRange(0, 100)
+    return '/img/vir/' + getRandomNumberByRange(0, 10)+'.jpeg'
   }
 
   function draw(ctx, operation, x, y) {

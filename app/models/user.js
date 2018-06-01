@@ -13,6 +13,7 @@ const UserSchema = new Schema({
   email: { type:String, required:true },
   avatar: { type:String, default:'default.jpg' },
   password: { type:String, required:true },
+  authority: { type:String, required:true ,default:'普通用户'},
   created: { type: Date },
 
 });

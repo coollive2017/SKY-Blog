@@ -5,7 +5,7 @@ block contentAll
 
     .user
       .login-logo 
-        h2 SKY-BlOG
+        h2 用户注册
       //- span
       //-   i.fa.fa-user-circle-o.fa-3x.login-fa
       .login
@@ -14,16 +14,26 @@ block contentAll
           form(action='', onsubmit="false")
             div.form-item
               span
-                label(for='username' ) 用户名
+                label(for='username' ) 用 户 名
               span
                 input#username.textbox(type='text',required='true')
             div.form-item
               span
-                label(for='#password') 密 &nbsp;&nbsp;&nbsp;码
+                label(for='#password') 用户密码
               span
                 input#password.password(type='password',required='true')
+            div.form-item
+              span
+                label(for='#passwordA') 确认密码
+              span
+                input#passwordA.password(type='password',required='true')
+            div.form-item
+              span
+                label(for='email' ) 邮 &nbsp;&nbsp;&nbsp;箱
+              span
+                input#email.textbox(type='email',required='true')      
               script(type="text/javascript").
-                function submitLogin(){
+                function submitRegister(){
                   $.ajax({
                     url:'',
                     data:{},
@@ -35,9 +45,11 @@ block contentAll
                 }    
             .sign
               .submit
-                input(type='submit', onclick='return submitLogin()', value='马上登录')
+                input(type='submit', onclick='return submitRegister()', value='马上注册')
+              .submit
+                input(type='reset',  value='重置')
               span.forget-pass
-                a(href='#') 忘记密码?
+                a(href='#') 联系我们！
               .clear  
-
+      // ---//end-main--
 
