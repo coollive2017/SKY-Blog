@@ -211,5 +211,20 @@ body{
   margin: 10px auto;
   padding: 10px;
 }
+.ul-article-content{
+  padding:0 2em;
+}
+.ul-article-content img{
+  height: 6em;
+  margin: 0 auto 1em;
+}
+.ul-article-content > .ul{
+  padding-top: 5px;
+  border-top: 1px solid #EEE;
+}
+.ul-article-content > .ul li{
+  margin: 8px 0;
+  border-left:3px solid #4792d3;
+}
 
 

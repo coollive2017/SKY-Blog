@@ -2,7 +2,7 @@ extends ./layout
 
 append css
   link(rel='stylesheet', href='/components/toopay-bootstrap-markdown/css/bootstrap-markdown.min.css')
-  link(rel='stylesheet', href='/components/editor.md/css/editormd.min.css')
+  link(rel='stylesheet', href='/components/editor.md/css/editormd.css')
 append beforjs
 
   script(src='/components/editor.md/editormd.js')
@@ -44,10 +44,6 @@ block contentLeft
           p.articleSLUG.hidden=article.slug
       .articleinfo
         span.articleinfo-left
-          span.article-userinfo
-            img.img-circle.img-responsive(src='/img/userimages/'+article.author.avatar)
-            | &nbsp;&nbsp;
-            =article.author.username
           span.article-created
             | &nbsp;&nbsp;
             i.fa.fa-clock-o &nbsp;
@@ -213,16 +209,15 @@ block contentRight
         h3.panel-title(style='border-bottom:1px solid rgba(0, 0, 0, 0.05);padding:8px 0;margin:0 0 5px;')
           span.glyphicon.glyphicon-triangle-right.myglyphicon(aria-hidden="true", )
           | 作者信息
-        .ulcontent
+        .ul-article-content
+          img.img-circle.img-responsive(src='/img/userimages/'+article.author.avatar)
           .ul.list-unstyled
-            li
-              a(href="#") Item 1
-            li
-              a(href="#") Item 2
-            li
-              a(href="#") Item 3
-            li
-              a(href="#") Item 4
+            li &nbsp;&nbsp;用户名：
+              =article.author.username
+            li &nbsp;&nbsp;Email：
+              =article.author.email
+            li &nbsp;&nbsp;注册时间：
+              =moment(article.author.created).format('YYYY-MM-DD')
 
     .panel.panel-default(style='border:0; box-shadow:3px 3px 15px -10px rgba(0, 0, 0, 0.9);')
       .panel-body(style='padding-top:0;')
