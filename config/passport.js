@@ -5,7 +5,7 @@ const User = mongoose.model('User');
 
 module.exports.init = () => {
 	console.log('passport.loacl.init!');
-	passport.use(new LocalStrategy({
+	passport.use('local', new LocalStrategy({
 			usernameField : 'username',
 			passwordField : 'password',
 			passReqToCallback : true
@@ -20,7 +20,7 @@ module.exports.init = () => {
 				if (!user) {
 					return done(null, false, {error: '该用户不存在！'});
 				}
-				if (!user.verifyPassword(password)){ 
+				if (!user.verifyPassword(password,user)){ 
 					return done(null, false, {error: '用户名或者密码有误！'}); 
 				}
 				return done(null, user);
@@ -30,13 +30,13 @@ module.exports.init = () => {
 
 	// passport-session
 	passport.serializeUser(function(user, done) {
-		console.log('passport.serializeUser.find:', username, err);
+		console.log('passport.serializeUser.find:', user);
 	  	done(null, user._id);
 	});
 	passport.deserializeUser(function(id, done) {
-		console.log('passport.deserializeUser.find:',id, err);
-		User.findById(_id, function (err, user) {
-		done(err, user);
+		console.log('passport.deserializeUser.find:',id);
+		User.findById(id, function (err, user) {
+			done(err, user);
 		});
 	});
 }

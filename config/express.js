@@ -4,18 +4,24 @@ const favicon = require('serve-favicon');
 const logger = require('morgan');
 const moment = require('moment');
 const truncate = require('truncate');
+const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
-const expressSession = require('express-session');
+const messages = require('express-messages');
 const bodyParser = require('body-parser');
 const compress = require('compression');
 const methodOverride = require('method-override');
-const mongoose = require('mongoose');
+const session = require('express-session');
 const passport = require('passport');
+const flash = require('connect-flash');;
 const markdown = require('markdown').markdown;
+const MongoStore = require('connect-mongo')(session);
+
+
 // models
 const Category = mongoose.model('Category');
+const User = mongoose.model('User');
 
-module.exports = (app, config) => {
+module.exports = (app, config, connection) => {
   const env = process.env.NODE_ENV || 'development';
   app.locals.ENV = env;
   app.locals.ENV_DEVELOPMENT = env === 'development';
@@ -43,13 +49,38 @@ module.exports = (app, config) => {
     extended: true
   }));
   app.use(cookieParser());
-  app.use(expressSession({
+  app.use(session({
     secret: 'Sky-Blog', 
-    resave: true, 
-    saveUninitialized: true, 
+    resave: false, 
+    saveUninitialized: true,
+    cookie:{ secure:false },
+    store: new MongoStore({ mongooseConnection: connection }),
   }));
   app.use(passport.initialize());
   app.use(passport.session());
+
+  app.use((req, res, next) => {
+    req.user = null;
+    if(req.session.passport && req.session.passport.user){
+      User.findById(req.session.passport.user, (err, user)=>{
+        if(err) return next(err);
+        user.password = null;
+        req.user = user;
+        next();
+      });
+    }else{
+      return next();
+    }
+  });
+
+  app.use(flash());
+  // 用户数据 
+  app.use((req, res, next) => {
+    app.locals.messages = messages(res, req);
+    app.locals.user = req.user;
+    next();
+  });
+
   app.use(compress());
   app.use(express.static(config.root + '/public'));
   app.use(methodOverride());

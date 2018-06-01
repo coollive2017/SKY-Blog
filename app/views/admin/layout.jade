@@ -24,32 +24,35 @@ block main
               li.active
                 a(href='#') 博客首页
             ul.nav.navbar-nav.navbar-right
-              //登录注册
-              li
-                a(href='/') 登录
-              li
-                a(href='/') 注册
-              //- 个人信息
-              li.dropdown
-                a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
-                  | 个人信息
-                  span.caret
-                ul.dropdown-menu
-                  li
-                    a(href='#') 我的收藏
-                  li
-                    a(href='#') 我的博客
-                  li.divider(role='separator')
-                  li.dropdown-header 用户名称
-                  li
-                    a(href='#')
-                      i.fa.fa-user-circle
-                      |&nbsp;个人设置
-                  li
-                    a(href='#')
-                      i.fa.fa-unlock
-                      |&nbsp;注销
-          // /.nav-collapse
+              //-登录注册
+              if(!user) 
+                li
+                  a(href='/user/login') 登录
+                li
+                  a(href='/user/register') 注册
+
+              else
+                li.dropdown
+                  a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
+                    | 个人信息
+                    span.caret
+                  ul.dropdown-menu
+                    li
+                      a(href='#') 我的收藏
+                    li
+                      a(href='#') 我的博客
+                    li.divider(role='separator')
+                    li.dropdown-header(style='color:#fff;')
+                      h4=user.username
+                    li
+                      a(href='#')
+                        i.fa.fa-user-circle
+                        |&nbsp;个人设置
+                    li
+                      a(href='/user/login/out')
+                        i.fa.fa-unlock
+                        |&nbsp;注销
+          //-.nav-collapse
 
       .container-fluid
         .row

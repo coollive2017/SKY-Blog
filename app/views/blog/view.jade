@@ -183,11 +183,11 @@ block contentLeft
             .form-group(style='margin-bottom:0;')
               label.col-sm-1.control-label(for="inputuser")
                 //- 登录后修改
-                img.img-circle.img-responsive(src='/img/userimages/'+article.author.avatar)
+                img.img-circle.img-responsive(src='/img/userimages/'+user.avatar)
               |     
               .col-sm-11
-                input.form-control#inputuser(type='hidden', name='username', value=article.author.username)
-                p.form-control-static=article.author.username
+                input.form-control#inputuser(type='hidden', name='username', value=user.username)
+                p.form-control-static=user.username
             |   
             .form-group(style='margin-bottom:0;') 
               .col-sm-12

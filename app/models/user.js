@@ -19,9 +19,9 @@ const UserSchema = new Schema({
 
 });
 
-UserSchema.methods.verifyPassword = (password) => {
-	var isMatch = md5(md5(password)+md5(password).substring(2,8)) === this.password;
-	console.log('passport.verifyPassword.find:', password, this.password, isMatch);
+UserSchema.methods.verifyPassword = (password, user) => {
+	var isMatch = (md5(md5(password)+md5(password).substring(2,8)) === user.password);
+	console.log('passport.verifyPassword.find:', password, user.password, isMatch);
 	return isMatch;
 }
 

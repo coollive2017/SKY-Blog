@@ -41,28 +41,31 @@ block main
                           window.location.replace('/articles?keyword='+keyword);
                         }    
             ul.nav.navbar-nav.navbar-right
-              //登录注册
-              li
-                a(href='/') 登录
-              li
-                a(href='/') 注册
-              //- 个人信息
-              li.dropdown
-                a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
-                  | 个人信息
-                  span.caret
-                ul.dropdown-menu
-                  li
-                    a(href='/articles/add') 写博客
-                  li
-                    a(href='#') 我的博客
-                  li.divider(role='separator')
-                  li.dropdown-header 
-                    span#usernameID(style='color:#fff;') admin
-                  li
-                    a(href='#') 个人设置
-                  li
-                    a(href='#') 注销
+              //-登录注册
+              if(!user) 
+                li
+                  a(href='/user/login') 登录
+                li
+                  a(href='/user/register') 注册
+              else 
+                li.dropdown
+                  a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
+                    | 个人信息
+                    span.caret
+                  ul.dropdown-menu
+                    li
+                      a(href='/articles/add') 写博客
+                    li
+                      a(href='#') 我的博客
+                    li.divider(role='separator')
+                    li.dropdown-header 
+                      span#usernameID(style='color:#fff;')
+                        h4=user.username
+                    li
+                      a(href='#') 个人设置
+                    li
+                      a(href='/user/login/out') 注销
+
           // /.nav-collapse
     block contentAll
     .container(style='padding:0;')
