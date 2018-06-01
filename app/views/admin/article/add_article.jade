@@ -57,7 +57,7 @@ block content
                 type: 'success',
                 confirmButtonText: "OK",
               }).then(function(isConfirm){
-                if(isConfirm){
+                if(isConfirm.value == true){
                   window.location.href='/admin';
                 }
               });

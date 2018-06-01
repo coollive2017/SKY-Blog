@@ -55,8 +55,8 @@ block contentAll
                 type: 'success',
                 confirmButtonText: "OK",
               }).then(function(isConfirm){
-                if(isConfirm){
-                  $('#articleForm')[0].reset();
+                if(isConfirm.value == true){
+                  window.location.href='/';
                 }
               });
             }
