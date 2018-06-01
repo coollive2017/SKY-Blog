@@ -25,8 +25,9 @@ models.forEach(function (model) {
 const app = express();
 
 module.exports = require('./config/express')(app, config);
+module.exports = require('./config/passport').init();
 
 app.listen(config.port, () => {
-  console.log('Express server listening on port ' + config.port);
+  console.log('Express server listening on port [' + config.port+']');
 });
 

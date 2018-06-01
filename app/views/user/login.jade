@@ -11,25 +11,50 @@ block contentAll
       .login
         .inset
           // ---start-main--
-          form(action='', onsubmit="false")
+          form(action='', method='post', onsubmit="return false;")
             div.form-item
               span
                 label(for='username' ) 用户名
               span
-                input#username.textbox(type='text',required='true')
+                input#username.textbox(type='text',required='true',name='username')
             div.form-item
               span
                 label(for='#password') 密 &nbsp;&nbsp;&nbsp;码
               span
-                input#password.password(type='password',required='true')
+                input#password.password(type='password',required='true',name="password")
               script(type="text/javascript").
                 function submitLogin(){
+                  var username = $("#username").val();
+                  var password = $("#password").val();
                   $.ajax({
-                    url:'',
-                    data:{},
+                    url:'/user/login',
+                    data:{
+                      username:username,
+                      password:password
+                    },
                     type:'POST',
-                    success:function(){
-
+                    success:function(msg){
+                      if(!msg.status){
+                        Swal({
+                          title: msg.text,
+                          type: 'error',
+                          confirmButtonText: "OK",
+                        }).then(function(isConfirm){
+                          if(isConfirm === true){
+                            return 0;
+                          }
+                        });
+                      }else{
+                        Swal({
+                          title: msg.text,
+                          type: 'success',
+                          confirmButtonText: "OK",
+                        }).then(function(isConfirm){
+                          if(isConfirm === true){
+                            window.location.href='/';
+                          }
+                        });
+                      }
                     }
                   });
                 }    

@@ -1,17 +1,18 @@
 const express = require('express');
 const glob = require('glob');
-
 const favicon = require('serve-favicon');
 const logger = require('morgan');
 const moment = require('moment');
 const truncate = require('truncate');
 const cookieParser = require('cookie-parser');
+const expressSession = require('express-session');
 const bodyParser = require('body-parser');
 const compress = require('compression');
 const methodOverride = require('method-override');
 const mongoose = require('mongoose');
+const passport = require('passport');
 const markdown = require('markdown').markdown;
-const { check, validationResult } = require('express-validator/check');
+// models
 const Category = mongoose.model('Category');
 
 module.exports = (app, config) => {
@@ -42,6 +43,13 @@ module.exports = (app, config) => {
     extended: true
   }));
   app.use(cookieParser());
+  app.use(expressSession({
+    secret: 'Sky-Blog', 
+    resave: true, 
+    saveUninitialized: true, 
+  }));
+  app.use(passport.initialize());
+  app.use(passport.session());
   app.use(compress());
   app.use(express.static(config.root + '/public'));
   app.use(methodOverride());

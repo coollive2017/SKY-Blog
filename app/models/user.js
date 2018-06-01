@@ -1,6 +1,7 @@
 // User Schema
 
 const mongoose = require('mongoose');
+const md5 = require('md5');
 const Schema = mongoose.Schema;
 
 /***
@@ -17,6 +18,12 @@ const UserSchema = new Schema({
   created: { type: Date },
 
 });
+
+UserSchema.methods.verifyPassword = (password) => {
+	var isMatch = md5(md5(password)+md5(password).substring(2,8)) === this.password;
+	console.log('passport.verifyPassword.find:', password, this.password, isMatch);
+	return isMatch;
+}
 
 UserSchema.virtual('date')
   .get(() => this._id.getTimestamp());

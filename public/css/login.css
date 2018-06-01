@@ -213,9 +213,9 @@ input[type="text"]:hover,input[type="email"]:hover,input[type="Password"]:hover,
 	left: 78.3%;
 	top: -5.4%;
 	}
-	input[type="text"], input[type="Password"] {
+	input[type="text"],input[type="email"], input[type="Password"] {
 	padding: 9px;
-	width: 100%;
+	width: 97%;
 	}
 }
 @media (max-width:1024px){
