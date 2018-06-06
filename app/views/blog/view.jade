@@ -178,24 +178,29 @@ block contentLeft
               p.alert.alert-info 该文章沙发还在，想对作者说点什么的快来坐上沙发。
             
 
-          h3 添加评论     
-          form.article-comments-form.form-horizontal(action='./comment/'+ article.id, enctype="multipart/form-data", method='post')
-            .form-group(style='margin-bottom:0;')
-              label.col-sm-1.control-label(for="inputuser")
-                //- 登录后修改
-                img.img-circle.img-responsive(src='/img/userimages/'+user.avatar)
-              |     
-              .col-sm-11
-                input.form-control#inputuser(type='hidden', name='username', value=user.username)
-                p.form-control-static=user.username
-            |   
-            .form-group(style='margin-bottom:0;') 
-              .col-sm-12
-                label.control-label(for="editortext") 
-                textarea#editortext.form-control(name='editortext',data-provide="markdown")
-            |   
-            .article-comments-form-button
-              button.btn.btn-default(type="submit") 我来说一句
+          h3 添加评论
+          if(user)      
+            form.article-comments-form.form-horizontal(action='./comment/'+ article.id, enctype="multipart/form-data", method='post')
+              .form-group(style='margin-bottom:0;')
+                label.col-sm-1.control-label(for="inputuser")
+                  //- 登录后修改
+                  img.img-circle.img-responsive(src='/img/userimages/'+user.avatar)
+                |     
+                .col-sm-11
+                  input.form-control#inputuser(type='hidden', name='username', value=user.username)
+                  p.form-control-static=user.username
+              |   
+              .form-group(style='margin-bottom:0;') 
+                .col-sm-12
+                  label.control-label(for="editortext") 
+                  textarea#editortext.form-control(name='editortext',data-provide="markdown")
+              |   
+              .article-comments-form-button
+                button.btn.btn-default(type="submit") 我来说一句
+          else
+            p.alert.alert-info
+              a(href='/user/login') 请登录后评论！ 
+
 
 
       //-.box(style='height:1000px;')
