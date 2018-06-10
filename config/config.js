@@ -9,6 +9,7 @@ const config = {
       name: 'sky-blog'
     },
     port: process.env.PORT || 3000,
+    // db: 'mongodb://localhost/test'
     db: 'mongodb://localhost/skyblog'
   },
 

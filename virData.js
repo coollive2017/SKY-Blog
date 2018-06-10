@@ -34,6 +34,7 @@ User.findOne((err, user) => {
     }
     categories.forEach((category) => {
       // 生成数据数据
+      console.time('insert_Time:');
       for(var i = 0; i < 60; i++){
         var title = lormipsum({count:1, units: 'sentences'});
         var article = new Article({
@@ -58,7 +59,11 @@ User.findOne((err, user) => {
           console.log('saved article:' + article.slug);
         });
       }
-
+      console.timeEnd('insert_Time:');
+      console.time('query_Time:');
+      Article.find({}).exec((err, articles) => {
+        console.timeEnd('query_Time:');
+      });
     });
   });
 });

@@ -45,7 +45,7 @@ block main
                     li.dropdown-header(style='color:#fff;')
                       h4=user.username
                     li
-                      a(href='#')
+                      a(href='/admin')
                         i.fa.fa-user-circle
                         |&nbsp;个人设置
                     li
@@ -64,10 +64,11 @@ block main
                   span.sr-only (current)
               li
                 a(href='/admin/articles/add') 添加文章
-              li
-                a(href='/admin/categories') 分类管理
-              li
-                a(href='/admin/categories/add') 添加分类
+              if(user.authority === '管理员')  
+                li
+                  a(href='/admin/categories') 分类管理
+                li
+                  a(href='/admin/categories/add') 添加分类
               script(type="text/javascript").
                 $(()=>{
                   $('.nav-sidebar').find('a').each(function (){
@@ -80,9 +81,9 @@ block main
              
             ul.nav.nav-sidebar
               li
-                a(href='/admin/users/personInfo') 个人信息
+                a(href='/admin/user/info') 个人信息
               li
-                a(href='/admin/users/password') 修改密码
+                a(href='/admin/user/password') 修改密码
             //  li
             //    a(href='') Another nav item
             //  li

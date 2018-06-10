@@ -10,5 +10,8 @@ module.exports = (app) => {
 router.get('/', (req, res, next) => {
   return res.redirect('/admin/articles')
 });
+// router.get('/user', (req, res, next) => {
+//   return res.redirect('/admin/userinfo')
+// });
 
 

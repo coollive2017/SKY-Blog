@@ -42,9 +42,13 @@ router.post('/', (req, res, next) => {
 			console.log(err);	
 		  	return next(err);
 		}
-		return res.jsonp({
+		console.log(username+'用户注册成功！');
+	});
+	req.logIn(user, function(err) {
+		if (err) { return next(err); }
+			return res.json({
 			status:true,
-			text:'用户注册成功！'
+			text:'用户注册成功，正在为你跳转！',
 		});
 	});
 });

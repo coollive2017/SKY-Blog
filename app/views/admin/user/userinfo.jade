@@ -1,0 +1,27 @@
+extends ../layout
+
+append css
+append beforjs
+
+block content 
+  .content
+    .page-header
+      h3='个人信息'
+    form#articleForm(action='', method='post', onsubmit="return false;")
+      .form-group 
+        label(for='categoryname') 用户头像：
+        .div.article-userinfo
+          img.img-circle.img-responsive(src='/img/userimages/' + user.avatar)
+      .form-group 
+        label(for='categoryname') 
+          | 用户名：
+          =user.username
+      .form-group 
+        label(for='categoryname') 
+          | 权 限：
+          =user.authority
+      .form-group 
+        label(for='categoryname') 
+          | 邮 箱：
+          =user.email
+
